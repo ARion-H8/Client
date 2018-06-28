@@ -7,34 +7,39 @@ import {
   TextInput
 } from 'react-native';
 
-
-export default class Login extends Component {
+class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>
-            Login
+            Register
           </Text>
+          <Text style={styles.subtitle}>Username:</Text>
+          <TextInput
+          name='username'
+          placeholder='Username...'
+          style={styles.textInput}
+          />
           <Text style={styles.subtitle}>Email:</Text>
           <TextInput
           name='email'
-          placeholder='Email'
+          placeholder='Email...'
           style={styles.textInput}
           />
           <Text style={styles.subtitle}>Password:</Text>
           <TextInput
           name='password'
-          placeholder='Password'
+          placeholder='Password...'
           style={styles.textInput}
           />
           <Button
-          title='Sign In'
+          title='Sign Up'
           onPress={() => this.props.navigation.navigate('Catalogue')}
           />
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -62,3 +67,5 @@ const styles = StyleSheet.create({
     margin: 2
   }
 })
+
+export default Register;
