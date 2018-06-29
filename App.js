@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
   YellowBox,
-  View,
-  Text
+  Button,
 } from 'react-native';
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated'])
@@ -16,12 +15,14 @@ import Detail from './pages/Detail'
 import Cart from './pages/Cart'
 import Catalogue from './pages/Catalogue'
 import Profile from './pages/Profile'
+import { Drawer } from 'native-base';
+import SideBar from './components/SideBar';
 
 const Navigator = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions:{
-      title:'Home'
+      title:'Home',
     }
   },
   ArCam: {
@@ -61,13 +62,23 @@ const Navigator = createStackNavigator({
     }
   },
 },{
-  initialRouteName: 'Home'
+  initialRouteName: 'Catalogue'
 });
 
 export default class App extends React.Component {
+ 
   render() {
     return (
-      <Navigator />
+      <Drawer
+      ref={(ref) => { this.drawer = ref; }}
+      content={<SideBar navigation={this.props.navigation} />}
+      onClose={() => this.closeDrawer()} >
+        <Navigator />
+        <Button
+          title='press'
+          onPress={ () => console.log(this) }
+        />
+      </Drawer>
     )
   }
 }

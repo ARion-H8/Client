@@ -37,11 +37,13 @@ export default class HelloWorldSceneAR extends Component {
             dragType="FixedToWorld"
             onPinch= { this._onPinch.bind(this) }
             onDrag={()=>{}}
+            position={[0, -1, 0]}
             ref={this._setARNodeRef} 
           >
-            <ViroImage
-              source={{ uri: 'https://storage.googleapis.com/storagetestupload/1530253507880glasses.png' }}
-              position={[0, -.5, -1]} scale={this.state.scale}
+            <Viro3DObject
+              source={{ uri: 'https://storage.googleapis.com/logo-image/1530197584087m_trousers_01.obj' }}
+               scale={this.state.scale}
+               position={[0, -1, 0]}
               type="OBJ"
             />
           </ViroNode>
