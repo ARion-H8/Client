@@ -61,3 +61,4 @@ export default class Detail extends Component {
 //     alignSelf: 'center',
 //     color: 'white'
 //   }
+// })
