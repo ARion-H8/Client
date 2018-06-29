@@ -4,10 +4,10 @@ import {
   View,
   Text
 } from 'react-native';
-import HelloWorldSceneAR from '../components/HelloWorldSceneAR'
+import HelloWorldSceneAR from '../components/ArProduct'
 import { ViroARSceneNavigator } from 'react-viro'
 
-let HelloAr = require('../components/HelloWorldSceneAR')
+let ArProduct = require('../components/ArProduct')
 let sharedProps = {
 	apiKey:'637783C0-7B08-4336-A463-922B852892BC'
 }
@@ -23,7 +23,7 @@ export default class ArCam extends Component {
   render() {
      	return (
 			<ViroARSceneNavigator {...this.state.sharedProps} 
-				initialScene={{ scene: HelloAr }}
+				initialScene={{ scene: ArProduct }}
 			/>
 		)
   }
