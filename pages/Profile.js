@@ -7,11 +7,13 @@ import {
 
 export default class Profile extends Component {
   render() {
-    <View>
-			<Text>
-				Profile
-			</Text>
-		</View>
+    return (
+      <View>
+        <Text>
+          Profile
+        </Text>
+      </View>
+    )
   }
 }
 

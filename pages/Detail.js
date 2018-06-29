@@ -7,11 +7,13 @@ import {
 
 export default class Detail extends Component {
   render() {
-    <View>
-			<Text>
-				Detail
-			</Text>
-		</View>
+    return (
+      <View>
+        <Text>
+          Detail
+        </Text>
+      </View>
+    )
   }
 }
 

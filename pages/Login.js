@@ -7,11 +7,13 @@ import {
 
 export default class Login extends Component {
   render() {
-    <View>
-			<Text>
-				Login
-			</Text>
-		</View>
+    return (
+      <View>
+        <Text>
+          Login
+        </Text>
+      </View>
+    )
   }
 }
 
