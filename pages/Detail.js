@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Image,
-  TouchableOpacity
+  Image
 } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Text, Body, Button } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Text, Body, Button, Left, Right } from 'native-base';
 
 
 export default class Detail extends Component {
@@ -17,12 +16,10 @@ export default class Detail extends Component {
           <Image source={require('./spiker.jpeg')} style={{ borderRadius: 10, margin: 10, alignSelf: 'center', width: 380, height: 380 }}/>
           <Text>Harga Barang</Text>
           <Container style={{ flexDirection: 'row', marginTop: 10, height: 50 }}>
-            {/* <Content> */}
               <Button success style={{ marginRight: 190  }}><Text>Cek Barang</Text></Button>
-            {/* </Content> */}
-            {/* <Content> */}
+            <Right>
               <Button success><Text>Beli</Text></Button>
-            {/* </Content> */}
+            </Right>
           </Container>
         </Content>
       </Container>
