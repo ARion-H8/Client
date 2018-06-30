@@ -7,11 +7,13 @@ import {
 
 export default class Cart extends Component {
   render() {
-    <View>
-			<Text>
-				Cart
-			</Text>
-		</View>
+    return (
+      <View>
+        <Text>
+          Cart
+        </Text>
+      </View>
+    )
   }
 }
 
