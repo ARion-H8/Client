@@ -13,7 +13,7 @@ export default class Detail extends Component {
       <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1ded3' }}>
         <Content style={{ padding: 10, marginTop: 30, width: 400, marginBottom: 170, backgroundColor: '#cd9774', borderRadius: 10 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Nama Barang</Text>
-          <Image source={require('./spiker.jpeg')} style={{ borderRadius: 10, margin: 10, alignSelf: 'center', width: 380, height: 380 }}/>
+          {/* <Image source={require('./spiker.jpeg')} style={{ borderRadius: 10, margin: 10, alignSelf: 'center', width: 380, height: 380 }}/> */}
           <Text>Harga Barang</Text>
           <Container style={{ flexDirection: 'row', marginTop: 10, height: 50 }}>
               <Button success style={{ marginRight: 190  }}><Text>Cek Barang</Text></Button>
