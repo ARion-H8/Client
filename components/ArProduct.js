@@ -22,6 +22,27 @@ export default class HelloWorldSceneAR extends Component {
     this._onInitialized = this._onInitialized.bind(this);
   }
 
+  _onClick = () => {
+    this.setState({
+      clickFlag: this.state.clickFlag + 1
+    })
+    if (this.state.clickFlag === 2) {
+      Alert.alert(
+        'Alert Title',
+        'My Alert Msg',
+        [
+          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      this.setState({
+        clickFlag: 0
+      })
+    }
+  }
+
   render() {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
