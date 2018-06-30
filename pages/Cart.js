@@ -3,12 +3,45 @@ import {
   View,
   StyleSheet,
   Image, 
-  TextInput
+  TextInput,
+  FlatList
 } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Text, Body, Button, Left, Right, Input } from 'native-base';
-
+import { 
+  Container, 
+  Header, 
+  Content, 
+  Card, 
+  CardItem, 
+  Text, 
+  Body, 
+  Button, 
+  Left, 
+  Right, 
+  Input 
+} from 'native-base';
 
 export default class Cart extends Component {
+  constructor () {
+    super ()
+    this.state = {
+      number: 0
+    }
+  }
+
+  handlePlus = () => {
+    this.setState({
+      number: this.state.number + 1
+    })
+  }
+
+  handleMinus = () => {
+    if (this.state.number > 0) {
+      this.setState({
+        number: this.state.number - 1
+      })
+    }
+  }
+
   render() {
     return (
       <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1ded3' }}>
@@ -27,11 +60,15 @@ export default class Cart extends Component {
             </CardItem>
             <CardItem>
               <Left>
-                <Button>
+                <Button
+                onPress={() => this.handleMinus()}
+                >
                   <Text>-</Text>
                 </Button>
-                <TextInput placeholder='0' style={{ borderWidth: 1, backgroundColor: 'white', height: 45, width: 45, textAlign: 'center' }}/>
-                <Button>
+                <Text style={{ textAlign: 'center', backgroundColor: 'white', borderWidth: 1, height: 45, width: 45 }}>{this.state.number}</Text>
+                <Button
+                onPress={() => this.handlePlus()}
+                >
                   <Text>+</Text>
                 </Button>
               </Left>
