@@ -18,68 +18,73 @@ class ListProducts extends Component {
   }
   render() {
     const { product, navigation } = this.props
-    console.log(this.props)
+    console.log(product)
     return (
-      <Card >
-        <CardItem>
-          <Left>
-            <Image 
-            source={{uri: 'http://www.solidbackgrounds.com/images/2880x1800/2880x1800-deep-moss-green-solid-color-background.jpg'}} 
-            style={{
-              height: 100, 
-              width: 100,
-              }}/>
-            <Body style={{
-              alignSelf:'flex-start'
-            }} >
-            <Text>
-              { product.name }
+      <View style={ styles.gridCard } >
+        <View style={ styles.gridHead } >
+          <Text style={{ color:'white', alignSelf:'center', }} >
+            { product.name }
+          </Text>
+        </View>
+        <View style={ styles.gridBody } >
+          <Text>
+          </Text>
+        </View>
+        <View style={ styles.gridFooter } >
+          <View style={styles.price} >
+            <Text style={{ color:'white', alignSelf:'center', }} >
+              { this.rupiah( product.price ) }
             </Text>
-            <Text>
-              { this.rupiah(product.price) }
-            </Text>
-
-              <View style={ styles.detail } >
-                <TouchableOpacity onPress={ this.toDetail } >
-                  <Text style={{ color:'white' }} >
-                    Detail
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={ styles.toCart } >
-                <TouchableOpacity onPress={ this.toCart } >
-                  <Text style={{ color:'white' }} >
-                    Add To Cart
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-            </Body>
-          </Left>
-        </CardItem>
-      </Card>
+          </View>
+          <View style={ styles.btnStyle } >
+            <TouchableOpacity>
+              <Text style={{ color:'white', alignSelf:'center', }}>
+                Add To Cart
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     );
   }
 }
   
   const styles = StyleSheet.create({
-    detail:{
-      alignSelf:'flex-end',
-      backgroundColor:'green',
-      marginTop: 10,
-      borderRadius: 4,
-      width:55,
-      height:25,
-      alignItems: 'center',
+    gridCard:{
+      width:'48%',
+      height:300,
+      borderWidth:0.4,
+      borderColor:'#b3b3b3',
+      margin:'1%',
     },
-    toCart:{
-      alignSelf:'flex-end',
-      backgroundColor:'red',
-      marginTop: 10,
-      borderRadius: 4,
-      width:95,
-      height:25,
-      alignItems: 'center',
+    gridHead:{
+      flex:1,
+      minHeight:50,
+      backgroundColor:'#29a329',
+      justifyContent:'center'
+    },
+    gridBody:{
+      flex:1,
+      minHeight:170,
+      backgroundColor:'white',
+      justifyContent:'center'
+    },
+    gridFooter:{
+      flex:1,
+      minHeight:79,
+      backgroundColor:'#00b386',
+      justifyContent:'center',
+    },
+    btnStyle:{
+      minHeight:29,
+      justifyContent:'center', 
+      backgroundColor:'#cc3300',
+      margin:4,
+      borderRadius:4,
+    },
+    price:{
+      justifyContent:'center', 
+      minHeight:40
     }
   })
   

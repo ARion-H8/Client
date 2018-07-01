@@ -1,8 +1,18 @@
 import React from "react";
-import { View, Image, StatusBar, ImageBackground } from "react-native";
+import {Image, ImageBackground, ToastAndroid } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
-const routes = ["Home", "Profile", "Detail", "Catalogue", "Cart"];
+const routes = ["Home", "Profile", "Detail", "Catalogue", "Cart", "signOut"];
 export default class SideBar extends React.Component {
+
+  logout = () => {
+    ToastAndroid.showWithGravity(
+      '   Success to Logout \n \nRedirect to Login',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    )
+    this.props.screenProps.changeLoginState(false)
+  }
+
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
@@ -28,11 +38,22 @@ export default class SideBar extends React.Component {
           <List
             dataArray={routes}
             renderRow={data => {
+             
               return (
                 <ListItem
                   button
-                  onPress={() => this.props.navigation.navigate(data)}>
-                  <Text>{data}</Text>
+                  onPress={
+                    data==="signOut"?
+                    this.logout
+                    :
+                    () => this.props.navigation.navigate(data)
+                  }>
+                  {
+                    data==="signOut"?
+                    <Text>Logout</Text>
+                    :
+                    <Text>{data}</Text>
+                  }
                 </ListItem>
               );
             }}

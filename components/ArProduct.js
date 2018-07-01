@@ -4,19 +4,21 @@ import {
   ViroARScene,
   ViroConstants,
   ViroNode,
-  ViroOmniLight
+  ViroOmniLight,
+  ViroButton
 } from 'react-viro';
 import Body3DObject from "./Body";
-import Head3DObject from "./Head";
+// import Head3DObject from "./Head";
 
-export default class HelloWorldSceneAR extends Component {
+export default class ArProduct extends Component {
   constructor() {
     super();
     this.state = {
       text: "Initializing AR...",
       scale: [.1, .1, .1],
       rotation: [0, 0, 0],
-      clickFlag: 0
+      clickFlag: 0,
+      buttonStateTag: ''
     };
 
     this._onInitialized = this._onInitialized.bind(this);
@@ -25,13 +27,26 @@ export default class HelloWorldSceneAR extends Component {
   render() {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroOmniLight />
+        {/* <ViroOmniLight /> */}
         <ViroNode position={[0, 0, 0]} dragType={'FixedDistance'}>
           <Body3DObject />
-          <Head3DObject />
+          {/* <Head3DObject /> */}
         </ViroNode>
+
       </ViroARScene>
     );
+  }
+
+  _onButtonGaze() {
+      this.setState({
+          buttonStateTag: "onGaze"
+      });
+  }
+
+  _onButtonTap() {
+      this.setState({
+          buttonStateTag: "onTap"
+      });
   }
 
   _onInitialized(state, reason) {
@@ -44,4 +59,4 @@ export default class HelloWorldSceneAR extends Component {
     }
   }
 }
-module.exports = HelloWorldSceneAR
+module.exports = ArProduct

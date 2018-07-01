@@ -85,7 +85,11 @@ export default class Cart extends Component {
           <Card>
             <CardItem cardBody>
               <Left>
+<<<<<<< HEAD
                 <Image source={require('./spiker.jpeg')} style={{height: 200, width: 200 }}/>
+=======
+                {/* <Image source={require('./spiker.jpeg')} style={{height: 200, width: 200}}/> */}
+>>>>>>> integrate auth to home, and change layout catalogue
               </Left>
               <Left>
                 <Body>
