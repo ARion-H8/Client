@@ -28,7 +28,7 @@ let product = {
 				email
 			}
 		}
-	`
+	`,
 }
 
 export default product
