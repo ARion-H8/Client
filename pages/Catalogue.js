@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import { StatusBar, AsyncStorage, StyleSheet, ActivityIndicator, View, FlatList } from 'react-native';
+import { StatusBar, AsyncStorage, StyleSheet, ActivityIndicator, View, FlatList, ScrollView } from 'react-native';
 import { Container, Header, Content} from 'native-base';
 import product from '../Graphql'
 import { graphql } from 'react-apollo'
 import ListProducts from '../components/ListProducts'
 
 class Catalogue extends Component {
-
-  async componentDidMount(){
-    try{
-      await AsyncStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjM0YTFjMmJiNGYwNDQ5ZGM2YThmYzYiLCJlbWFpbCI6InJleUBnbWFpbC5jb20iLCJpYXQiOjE1MzAxNzc3MDl9.8q1YWBBsyOdkQO3pXKQqHCZ3EWKd_84CqWpOgDq3TDY')
-    }catch(err){
-      console.log(err)
-    }
-  }
 
   render() {
     const { products, loading } = this.props.data
@@ -27,15 +19,24 @@ class Catalogue extends Component {
 			)
 		}else{
       return (
-        <Container>
-          <Content>
-            <FlatList
-              data= { products }
-              keyExtractor= { item => item._id }
-              renderItem ={({ item }) => <ListProducts product= { item } navigation= { navigation } /> }
-            />
-          </Content>
-        </Container>
+        <View style={ styles.content } >
+          <ScrollView contentContainerStyle={ styles.scroll }  >
+            {
+              products.map(item=>{
+                return  <ListProducts product={ item } key={item._id} navigation= { navigation } />
+              })
+            }
+          </ScrollView>
+        </View>
+        // <Container>
+        //   <Content>
+        //     <FlatList
+        //       data= { products }
+        //       keyExtractor= { item => item._id }
+        //       renderItem ={({ item }) => <ListProducts product= { item } navigation= { navigation } /> }
+        //     />
+        //   </Content>
+        // </Container>
       )
     }
   }
@@ -66,6 +67,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  content:{
+    flex:1,
+    borderWidth:1,
+    borderColor:'#ccc',
+    display: "flex",
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  scroll:{
+    display: "flex",
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignContent: 'stretch',
+  }
 })
 
 export default graphql(product.show)(Catalogue)

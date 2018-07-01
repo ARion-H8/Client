@@ -10,6 +10,24 @@ let product = {
 					image
 			}
 		}
+	`,
+	signIn: gql`
+		mutation signIn($email: String, $password: String){
+			signIn(email: $email, password: $password){
+				password
+				email
+				token
+			}
+		}
+	`,
+	signUp: gql`
+		mutation signUp($newUser: newUser){
+			signUp(newUser: $newUser){
+				username
+				password
+				email
+			}
+		}
 	`
 }
 

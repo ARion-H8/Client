@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text
+	Text,
+	TouchableHighlight
 } from 'react-native';
-import HelloWorldSceneAR from '../components/ArProduct'
 import { ViroARSceneNavigator } from 'react-viro'
 
 let ArProduct = require('../components/ArProduct')
@@ -21,10 +21,10 @@ export default class ArCam extends Component {
 	}
 
   render() {
-     	return (
-			<ViroARSceneNavigator {...this.state.sharedProps} 
-				initialScene={{ scene: ArProduct }}
-			/>
+		return (
+				<ViroARSceneNavigator {...this.state.sharedProps} 
+					initialScene={{ scene: ArProduct }}
+				/>
 		)
   }
 }
