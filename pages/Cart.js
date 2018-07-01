@@ -24,7 +24,7 @@ import {
 import ListCart from '../components/ListCart.js'
 import Total from '../components/Total.js'
 import product from '../Graphql'
-// import { graphql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 
 class Cart extends Component {
   constructor () {

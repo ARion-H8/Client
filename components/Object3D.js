@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 import {
   ViroARScene,
@@ -35,29 +35,25 @@ export default class Body extends Component {
     ViroMaterials.createMaterials({
       dress_flower: {
         lightingModel: "Constant",
-        normalTexture: { uri: 'https://storage.googleapis.com/storagetestupload/1530340349862apron_normal.png' },
-        diffuseTexture: { uri: 'https://storage.googleapis.com/storagetestupload/1530340406996apron_color.png'},
-        specularTexture: { uri: 'https://storage.googleapis.com/storagetestupload/1530340431282apron_low_feb_body_backup_lambert5SG_SpecularSmoothness.png'},
-      }
+        normalTexture: require('../js/assets/apron/apron_normal.png'),
+        diffuseTexture: require('../js/assets/apron/apron_color.png'),
+        specularTexture: require('../js/assets/apron/apron_low_feb_body_backup_lambert5SG_SpecularSmoothness.png'),
+      },
     });
     return (
-
       <Viro3DObject
         ref={this._setARNodeRef}
-        // source={require('../js/assets/apron_low.obj')}
-        source={{ uri: 'https://storage.googleapis.com/storagetestupload/1530340269518apron_low.obj' }}
-        onDrag={() => {
-          this.setState({
-            clickFlag: 0
-          })
-        }}
+        position={[0, this.props.yOffset, 0]}
+        source={this.props.item.source}
+        type="VRX"
         rotation={this.state.rotation}
+        scale={this.state.scale}
         onRotate={this._onRotate}
         onPinch={this._onPinch}
-        position={[0, 0, -10]}
-        scale={this.state.scale}
-        materials={["dress_flower"]}
-        type="OBJ" />
+        onLoadEnd={this.props._onLoadEnd}
+        onLoadStart={this.props._onLoadStart}
+        materials={["hat"]}
+      />
     )
   }
 

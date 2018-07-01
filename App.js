@@ -12,6 +12,7 @@ import {
 import { getToken, signIn, signOut } from './auth'
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated'])
+YellowBox.ignoreWarnings(['Module'])
 console.ignoredYellowBox = ['Remote debugger']
 
 import { createStackNavigator, createDrawerNavigator, StackNavigator } from 'react-navigation'
