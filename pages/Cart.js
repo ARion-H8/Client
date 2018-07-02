@@ -44,6 +44,7 @@ class Cart extends Component {
         }
       ],
       quantity: null
+
     }
   }
 
@@ -77,6 +78,8 @@ class Cart extends Component {
     let result = strNum.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
     return  `Rp. ${result}`
   }
+
+  
 
   render() {
     const { user, loading, error } = this.props.data

@@ -1,21 +1,32 @@
 import React from "react";
-import { View, Image, StatusBar, ImageBackground } from "react-native";
+import {Image, ImageBackground, ToastAndroid } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
-const routes = ["Home", "Profile", "Detail", "Catalogue", "Cart"];
+const routes = ["Home", "Catalogue", "Cart", "signOut"];
 export default class SideBar extends React.Component {
+
+  logout = () => {
+    ToastAndroid.showWithGravity(
+      ' Success to Logout \n \n  Redirect to Login',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    )
+    this.props.screenProps.changeLoginState(false)
+  }
+
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }}>
+      <Container style={{ backgroundColor: '#339966' }}>
         <Content>
           <ImageBackground
-            source={{
-              uri: "http://www.solidbackgrounds.com/images/2880x1800/2880x1800-deep-moss-green-solid-color-background.jpg"
-            }}
+            source={require('../Arion.jpg')}
             style={{
-              height: 120,
+              height: 180,
               alignSelf: "stretch",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              margin :2,
+              borderRadius:2,
+              opacity:0.8
             }}>
             <Image
               square
@@ -28,11 +39,22 @@ export default class SideBar extends React.Component {
           <List
             dataArray={routes}
             renderRow={data => {
+             
               return (
                 <ListItem
                   button
-                  onPress={() => this.props.navigation.navigate(data)}>
-                  <Text>{data}</Text>
+                  onPress={
+                    data==="signOut"?
+                    this.logout
+                    :
+                    () => this.props.navigation.navigate(data)
+                  }>
+                  {
+                    data==="signOut"?
+                    <Text style={{ color:'white' }} >Logout</Text>
+                    :
+                    <Text style={{ color:'white' }} >{data}</Text>
+                  }
                 </ListItem>
               );
             }}

@@ -1,41 +1,77 @@
 import React, { Component } from 'react';
-import { StatusBar, AsyncStorage, StyleSheet, ActivityIndicator, View, FlatList } from 'react-native';
-import { Container, Header, Content} from 'native-base';
+import { StatusBar, 
+  AsyncStorage, 
+  StyleSheet, 
+  View, 
+  ScrollView, 
+  Image } from 'react-native';
+import { Container, Header, Content, Card,CardItem,Icon,Body,Thumbnail,Left,Button,Right,Text } from 'native-base';
 import product from '../Graphql'
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import ListProducts from '../components/ListProducts'
+import CartIcon from '../components/CartIcon'
 
 class Catalogue extends Component {
-
-  async componentDidMount(){
-    try{
-      await AsyncStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjM0YTFjMmJiNGYwNDQ5ZGM2YThmYzYiLCJlbWFpbCI6InJleUBnbWFpbC5jb20iLCJpYXQiOjE1MzAxNzc3MDl9.8q1YWBBsyOdkQO3pXKQqHCZ3EWKd_84CqWpOgDq3TDY')
-    }catch(err){
-      console.log(err)
+  constructor(){
+    super()
+    this.state={
+      totalCart:0
     }
   }
 
+  addToCart = async (newData) => {
+    const { _id } = newData
+    try{
+      let result = await this.props.mutate({
+        variables:{
+          newCart:{
+            product:_id,
+            quantity:1
+          }
+        },
+        refetchQueries: [{ query:product.cart }]
+      })
+      console.log(result)
+    }catch(err){
+      console.log(err)
+    }
+    let { totalCart } = this.state
+    totalCart+=1
+    this.setState({ totalCart })
+  }
+
+  toCart = () => {
+    this.props.navigation.navigate('Cart')
+  }
+
   render() {
-    const { products, loading } = this.props.data
+    const { products, loading,user } = this.props.data
     const  navigation = this.props.navigation
     if(loading){
 			return (
 				<View style={ styles.container } >
-					<ActivityIndicator />
-					<StatusBar barStyle="default" />
+					<Image source={ require('../Arion.jpg') }/>
 				</View>
 			)
 		}else{
       return (
         <Container>
-          <Content>
-            <FlatList
-              data= { products }
-              keyExtractor= { item => item._id }
-              renderItem ={({ item }) => <ListProducts product= { item } navigation= { navigation } /> }
-            />
-          </Content>
-        </Container>
+        <Header style={{ backgroundColor:'white' }} >
+          <Left>
+            <Text style={{ fontWeight:'bold' }} >Catalogue</Text>
+          </Left>
+          <Right>
+            <CartIcon navigation={ navigation } totalCart={ this.state.totalCart } />
+          </Right>
+        </Header>
+        <ScrollView contentContainerStyle={ styles.scroll } >
+          {
+            products.map(item=>{
+              return  <ListProducts product={ item } key={item._id} navigation= { navigation } addToCart={ this.addToCart } />
+            })
+          }
+        </ScrollView>
+      </Container>
       )
     }
   }
@@ -66,6 +102,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+  content:{
+    flex:1,
+    borderWidth:1,
+    borderColor:'#ccc',
+    display: "flex",
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  scroll:{
+    display: "flex",
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignContent: 'stretch',
+  }
 })
 
-export default graphql(product.show)(Catalogue)
+export default compose(
+  graphql(product.show),
+  graphql(product.addCart)
+)(Catalogue)

@@ -10,6 +10,47 @@ let product = {
 					image
 			}
 		}
+	`,
+	signIn: gql`
+		mutation signIn($email: String, $password: String){
+			signIn(email: $email, password: $password){
+				password
+				email
+				token
+			}
+		}
+	`,
+	signUp: gql`
+		mutation signUp($newUser: newUser){
+			signUp(newUser: $newUser){
+				username
+				password
+				email
+			}
+		}
+	`,
+	cart:gql`
+		query {
+			user{
+				cart{
+					_id
+					product{
+						_id
+						name
+						price
+						image
+					}
+					quantity
+				}
+			}
+		}
+	`,
+	addCart:gql`
+		mutation addCart ($newCart: newCartItem){
+			addCart(newCartItem:$newCart){
+				quantity
+			}
+		}
 	`
 }
 

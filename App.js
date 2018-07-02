@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import {
   YellowBox,
+  View,
   Button,
-  AsyncStorage
+  ActivityIndicator,
+  StatusBar,
+  AsyncStorage,
+  StyleSheet,
+  Image
 } from 'react-native';
+import { getToken, signIn, signOut } from './auth'
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated'])
 console.ignoredYellowBox = ['Remote debugger']
 
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import { createStackNavigator, createDrawerNavigator, StackNavigator } from 'react-navigation'
 import Home from './pages/Home'
 import ArCam from './pages/ArCam'
 import Login from './pages/Login'
-import Detail from './pages/Detail'
+import Register from './pages/Register'
 import Cart from './pages/Cart'
 import Catalogue from './pages/Catalogue'
-import Profile from './pages/Profile'
-import { Drawer } from 'native-base';
 import SideBar from './components/SideBar';
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
 const client = new ApolloClient({
-  uri: "http://192.168.1.95:3000/graphql",
+  uri: "https://arion-208509.appspot.com/graphql",
   request: async (operation) => {
     const token = await AsyncStorage.getItem('token')
     operation.setContext({
@@ -32,19 +36,44 @@ const client = new ApolloClient({
     });
   }
 })
+
 const HomeScreenRouter = createDrawerNavigator(
   {
+    Catalogue: {
+      screen: createStackNavigator(
+        {
+          Catalogue:{
+            screen:Catalogue,
+            navigationOptions:{
+              header:null
+            }
+          }
+        }
+      )
+    },
     Home: {
-      screen: Home,
-      navigationOptions:{
-        title:'Home',
-      }
+      screen: createStackNavigator(
+        {
+          Home:{
+            screen:Home,
+            navigationOptions:{
+              title:'Home'
+            }
+          }
+        }
+      )
     },
     ArCam: {
-      screen: ArCam,
-      navigationOptions:{
-        header: null
-      }
+      screen: createStackNavigator(
+        {
+          ArCam:{
+            screen:ArCam,
+            navigationOptions:{
+              title:'ArCam'
+            }
+          }
+        }
+      )
     },
     Login: {
       screen: Login,
@@ -52,29 +81,17 @@ const HomeScreenRouter = createDrawerNavigator(
         header: null
       }
     },
-    Detail: {
-      screen: Detail,
-      navigationOptions:{
-        header: null
-      }
-    },
     Cart: {
-      screen: Cart,
-      navigationOptions:{
-        header: null
-      }
-    },
-    Catalogue: {
-      screen: Catalogue,
-      navigationOptions:{
-        title: 'Catalogue'
-      }
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions:{
-        title: 'Profile'
-      }
+      screen: createStackNavigator(
+        {
+          Cart:{
+            screen:Cart,
+            navigationOptions:{
+              title:'Cart'
+            }
+          }
+        }
+      )
     },
   },
   {
@@ -82,61 +99,95 @@ const HomeScreenRouter = createDrawerNavigator(
   }
 );
 
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions:{
+      header: null
+    }
+  },
+  Register: {
+    screen: Register,
+    navigationOptions:{
+      header: null
+    }
+  },
+})
+
 const Navigator = createStackNavigator({
   Catalogue: {
     screen: HomeScreenRouter,
     navigationOptions:{
-      title:'Catalogue',
+      header:null
     }
   },
-  // ArCam: {
-  //   screen: ArCam,
-  //   navigationOptions:{
-  //     header: null
-  //   }
-  // },
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions:{
-  //     header: null
-  //   }
-  // },
-  // Detail: {
-  //   screen: Detail,
-  //   navigationOptions:{
-  //     header: null
-  //   }
-  // },
-  // Cart: {
-  //   screen: Cart,
-  //   navigationOptions:{
-  //     header: null
-  //   }
-  // },
-  // Catalogue: {
-  //   screen: Catalogue,
-  //   navigationOptions:{
-  //     title: Catalogue
-  //   }
-  // },
-  // Profile: {
-  //   screen: Profile,
-  //   navigationOptions:{
-  //     title: 'Profile'
-  //   }
-  // },
-},{
-  initialRouteName: 'Catalogue'
 });
 
 export default class App extends React.Component {
-  
-  render() {
-    return (
-      <ApolloProvider client = { client }>
-        <Navigator/>
-      </ApolloProvider>
+  constructor(){
+    super()
+    this.state ={
+       loggedIn: false,
+       loading: true,
+       cart: null
+    }
+  }
+
+  async componentDidMount() {
+    const token = await getToken()
+    if (token) {
+      this.setState({ loggedIn: true });
+      this.setState({ loading: false });
+    }else{
+      this.setState({ loading: false });
+    }
+  }
+
+  handleChangeLoginState = (loggedIn = false, token) => {
+    this.setState({ loggedIn });
+    if (loggedIn) {
+      signIn(token);
+    } else {
+      signOut();
+    }
+  };
+
+  refetch = () => {
+    let cart = AsyncStorage.getItem(cart, [])
+    this.setState({
+      cart
+    }
     )
+  }
+
+  render() {
+    const{ loggedIn,loading } = this.state
+    if(loading){
+			return (
+				<View style={ styles.container } >
+          <Image source={ require('./Arion.jpg') }/>
+				</View>
+			)
+		}else{
+      return (
+        <ApolloProvider client = { client }>
+          {
+            loggedIn ?
+            <Navigator screenProps={{ changeLoginState: this.handleChangeLoginState, refetch: this.refetch }} />
+            :
+            <AuthStack screenProps={{ changeLoginState: this.handleChangeLoginState }} />
+          }
+        </ApolloProvider>
+      )
+    }
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+});
