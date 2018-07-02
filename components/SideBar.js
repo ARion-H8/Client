@@ -1,7 +1,7 @@
 import React from "react";
 import {Image, ImageBackground, ToastAndroid } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
-const routes = ["Home", "Catalogue", "Cart", "signOut"];
+const routes = ["Catalogue", "Cart", "signOut"];
 export default class SideBar extends React.Component {
 
   logout = () => {
