@@ -51,6 +51,46 @@ let product = {
 				quantity
 			}
 		}
+	`,
+	editCart: gql`
+		mutation editCart($cartId: String, $quantity: Int){
+			editCart(cartId: $cartId, quantity: $quantity){
+				_id
+				product {
+					_id
+					name
+					price
+					image
+				}
+				user {
+					_id
+					username
+					email
+					password
+				}
+				quantity
+			}
+		}
+	`,
+	deleteCart: gql`
+		mutation deleteCart($cartId: String){
+			deleteCart(cartId: $cartId){
+				_id
+				product {
+					_id
+					name
+					price
+					image
+				}
+				user {
+					_id
+					username
+					email
+					password
+				}
+				quantity
+			}
+		}
 	`
 }
 
