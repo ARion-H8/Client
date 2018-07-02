@@ -28,8 +28,11 @@ class ListCart extends Component {
   constructor () {
     super ()
     this.state = {
+      quantity: 1,
+      image:'https://images.pexels.com/photos/889087/pexels-photo-889087.jpeg?auto=compress&cs=tinysrgb&h=350',
+      name:'',
+      price:0,
       total: 0,
-      quantity: 1
     }
   }
 
@@ -40,87 +43,95 @@ class ListCart extends Component {
   }
 
   handlePlus = async () => {
-    console.log('masuk ++++')
     let { quantity } = this.state
+    let id = this.props.item._id
+    let price = this.state.price
+   
     quantity += 1
      this.setState({
       quantity
     })
-    console.log('qty ====', quantity)
-    console.log('item ========', this.props.item)
+    let { plus } = this.props
+    plus(price)
     try {
-      console.log('try ------', this.props)
-      let result = await this.props.edit({ 
-        variables: { 
-          cartId: this.props.item._id, 
-          quantity: quantity
-        }
+      let result = await this.props.edit({
+        variables:{
+          cartId:id, 
+          quantity:quantity
+        },
+        refetchQueries:[{ query: product.cart }]
       })
-      console.log('ini RESULT ===> ', result)
+      
     } catch (err) {
       console.log(err)
     }
-    // console.log('TOTAL> ', this.state.total)
-    // console.log('+++++>', this.state.quantity)
-    // console.log('total +++++>', this.state.total)
-    // this.props.forTotalPrice(this.state.total)
   }
   
   handleMinus = async () => {
-    // console.log(this.props.item.price)
     if (this.state.quantity > 1) {
       let { quantity } = this.state
+      let id = this.props.item._id
+      let price = this.state.price
+      
       quantity -= 1
       this.setState({
         quantity
       })
-
+      let { minus } = this.props
+      minus(price)
       try {
-        let result = await this.props.edit({ 
-          variables: { 
-            cartId: this.props.item._id, 
-            quantity: quantity 
-          } 
+        let result = await this.props.edit({
+          variables:{
+            cartId:id, 
+            quantity:quantity
+          },
+          refetchQueries:[{ query: product.cart }]
         })
-        console.log('ini RESULT ===> ', result)
+        
+        console.log(result)
       } catch (err) {
         console.log(err)
       }
     }
-    // console.log('----->', this.state.quantity)
-    // console.log('total ----->', this.state.total)
-    // this.props.forTotalPrice(this.state.total)
   }
 
   componentDidMount = () => {
+    let total = this.props.item.product.price * this.props.item.quantity
     this.setState({
-      total: this.props.item.product.price
+      total
+    })
+    this.setState({
+      image: this.props.item.product.image
+    })
+    this.setState({
+      name: this.props.item.product.name
+    })
+    this.setState({
+      price: this.props.item.product.price
+    })
+    this.setState({
+      quantity: this.props.item.quantity
     })
   }
 
   render() {
-    const { navigation } = this.props
-    const { product } = this.props.item
-    // console.log('ini price', price)
-    // console.log('props ListCart >>>>> ', this.props)
-    // console.log('products =====', product)
-    // console.log("TOTAL >>> ", this.state.total)
+    const { name, image, price, quantity } = this.state
     return (
       <Card>
         <CardItem cardBody>
           <Left>
-            <Image source={product.image} style={{height: 200, width: 200 }}/>
+            <Image source={{ uri:image}} style={{height: 200, width: 200, margin:10 }}/>
           </Left>
-          <Left>
-            <Body>
-              <Text 
-              style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b' }}
-              >{product.name}</Text>
-              <Text 
-              style={{ alignSelf: 'flex-start', color: '#3e3e3b' }}
-              >{this.rupiah(product.price)}</Text>
-            </Body>
-          </Left>
+            <Left style={{ marginLeft:40 }} >
+              <Body>
+                <Text 
+                style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b' }}
+                >{name}</Text>
+                <Text 
+                style={{ alignSelf: 'flex-start', color: '#3e3e3b' }}
+                >{this.rupiah(price)}</Text>
+              </Body>
+            </Left>
         </CardItem>
         <CardItem>
           <Left style={{ alignItems: 'flex-start' }}>
@@ -131,8 +142,8 @@ class ListCart extends Component {
             >
               <Text style={{ fontWeight: 'bold' }}> - </Text>
             </Button>
-            <Button bordered rounded light onPress={this.props.forTotalPrice(this.state.total)}>
-              <Text style={{ color: 'black' }}> {this.state.quantity} </Text>
+            <Button bordered rounded light >
+              <Text style={{ color: 'black' }}> {quantity} </Text>
             </Button>
             <Button
             rounded

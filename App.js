@@ -51,25 +51,13 @@ const HomeScreenRouter = createDrawerNavigator(
         }
       )
     },
-    Home: {
-      screen: createStackNavigator(
-        {
-          Home:{
-            screen:Home,
-            navigationOptions:{
-              title:'Home'
-            }
-          }
-        }
-      )
-    },
     ArCam: {
       screen: createStackNavigator(
         {
           ArCam:{
             screen:ArCam,
             navigationOptions:{
-              title:'ArCam'
+              header:null
             }
           }
         }
