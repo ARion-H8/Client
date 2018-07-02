@@ -31,47 +31,9 @@ class Cart extends Component {
     super ()
     this.state = {
       totalPrice: 0,
-      data: [
-        {
-          nama: 'item1',
-          harga: 10000
-        }, {
-          nama: 'item2',
-          harga: 20000
-        }, {
-          nama: 'item3',
-          harga: 30000
-        }
-      ],
-      quantity: null
-
     }
   }
 
-  componentDidMount() {
-    const { user } = this.props.data
-    console.log("user >>", this.props)
-    // let total = 0
-    // user.cart.map((item) => {
-    //   total += item.product.price
-    // })
-    // this.setState({
-    //   totalPrice: total
-    // })
-    // this.forTotalPrice()
-  }
-
-  forTotalPrice = (total) => {
-    console.log('total =====>', total)
-    // this.state.data.map((item) => {
-    //   this.state.totalPrice = this.state.totalPrice + item.harga
-    // })
-    let totalItem = 0
-    totalItem += total
-    this.setState({
-      totalPrice: totalItem
-    })
-  }
 
   rupiah = (num) => {
     let strNum = num.toString()
@@ -79,15 +41,51 @@ class Cart extends Component {
     return  `Rp. ${result}`
   }
 
-  
+  plus = (price) => {
+    console.log(price,'plus')
+    let { totalPrice } = this.state
+    totalPrice+=price
+    this.setState({
+      totalPrice
+    })
+  }
+
+  minus = (price) => {
+    console.log(price,'minus')
+    let { totalPrice } = this.state
+    totalPrice-=price
+    this.setState({
+      totalPrice
+    })
+  }
+
+
+  componentDidMount(){
+    const { user } = this.props.data
+    let totalPrice = 0
+      let result = user.cart.map((item) => {
+        totalPrice += item.product.price * item.quantity
+        return totalPrice
+      })
+    this.setState({
+      totalPrice
+    })
+  }
+
+  toArCam = (navType) => {
+		this.props.navigation.navigate('ArCam')
+	}
 
   render() {
     const { user, loading, error } = this.props.data
     const { navigation } = this.props
-    console.log('props >>>>>', this.props)
-    console.log('TOTALPRICE > ', this.state.totalPrice)
+    
     if (loading) {
-      return <Text>Loading . . .</Text>
+      return (
+				<View style={ styles.container } >
+					<Image source={ require('../Arion.jpg') }/>
+				</View>
+			)
     } else {
       return (
         <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ebeced' }}>
@@ -95,15 +93,19 @@ class Cart extends Component {
             <FlatList
             data={user.cart}
             keyExtractor={item => item._id}
-            renderItem={({item}) => <ListCart forTotalPrice={this.forTotalPrice} item={ item } price={item.price} navigation={ navigation }/>}
+            renderItem={({item}) => <ListCart item={ item } plus={this.plus} minus={this.minus} price={item.price} navigation={ navigation }/>}
             />
           </Content>
-          <Total data={user.cart}/>
+          <View style={{ marginLeft:30,height: 40, padding: 10, flexDirection: 'row', width: 380, borderBottomWidth: 1, borderColor: '#a2aab0' }}>
+            <Text style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b' }}>Total Price: {this.rupiah(this.state.totalPrice)} </Text>
+          </View>
           <View style={{ height: 65, padding: 10, flexDirection: 'row', width: 400, }}>
-            <Button block style={{ marginRight: 130, alignSelf: 'flex-start', borderRadius: 5 }}>
+            <Button block 
+            onPress={this.toArCam}
+            style={{marginLeft:15, marginRight: 115, alignSelf: 'flex-start', borderRadius: 5 }}>
               <Text style={{ fontWeight: 'bold' }}>FITTING ROOM</Text>
             </Button>
-            <Button block style={{ borderRadius: 5 }}>
+            <Button block style={{marginRight: 30, borderRadius: 5 }}>
               <Text style={{ fontWeight: 'bold', borderRadius: 5 }}>CHECKOUT</Text>
             </Button>
           </View>
@@ -113,4 +115,13 @@ class Cart extends Component {
   }
 }
 
-export default graphql(product.users)(Cart)
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+})
+
+export default graphql(product.cart)(Cart)
