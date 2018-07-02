@@ -5,11 +5,11 @@ const routes = ["Catalogue", "Cart", "signOut"];
 export default class SideBar extends React.Component {
 
   logout = () => {
-    ToastAndroid.showWithGravity(
-      ' Success to Logout \n \n  Redirect to Login',
-      ToastAndroid.SHORT,
-      ToastAndroid.CENTER
-    )
+    // ToastAndroid.showWithGravity(
+    //   ' Success to Logout \n \n  Redirect to Login',
+    //   ToastAndroid.SHORT,
+    //   ToastAndroid.CENTER
+    // )
     this.props.screenProps.changeLoginState(false)
   }
 

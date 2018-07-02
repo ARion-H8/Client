@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Label, Button, Text, H1 } from 'native-base';
-import { StyleSheet, View, TouchableOpacity, AsyncStorage, Alert, ToastAndroid } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
 import product from '../Graphql'
 import { graphql } from 'react-apollo'
 
@@ -30,11 +30,11 @@ class Login extends Component {
       })
 			let { token, _id, name } = result.data.signIn
 			if(token){
-          ToastAndroid.showWithGravity(
-            '   Success to Login \n \nRedirect to Catalogue',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER
-          )
+          // ToastAndroid.showWithGravity(
+            // '   Success to Login \n \nRedirect to Catalogue',
+            // ToastAndroid.SHORT,
+            // ToastAndroid.CENTER
+          // )
           this.props.screenProps.changeLoginState(true, token)
 			}
 		}catch(err){

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image,StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Head } from 'native-base';
 
 class ListProducts extends Component {
@@ -26,8 +26,7 @@ class ListProducts extends Component {
           </Text>
         </View>
         <View style={ styles.gridBody } >
-          <Text>
-          </Text>
+          <Image source={{uri: product.image}} style={{width: "100%", height: 170}}/>
         </View>
         <View style={ styles.gridFooter } >
           <View style={styles.price} >

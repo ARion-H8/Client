@@ -31,13 +31,15 @@ export default class ArInit extends Component {
     let objects = [];
     const { cartItem } = this.props
     cartItem.forEach((item, index) => {
-      objects.push(<Object3D
-        index={index}
-        item={item}
-        key={item.name}
-        arSceneNavigator={{ ...this.props.arSceneNavigator }}
-        arscene={arscene}
-      />)
+      if(item.display) {
+        objects.push(<Object3D
+          index={index}
+          item={item}
+          key={item.name}
+          arSceneNavigator={{ ...this.props.arSceneNavigator }}
+          arscene={arscene}
+        />)
+      }
     })
     return objects
   }

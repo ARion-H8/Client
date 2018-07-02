@@ -1,24 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View,
-	Text,
-	TouchableHighlight
-} from 'react-native';
 import { ViroARSceneNavigator } from 'react-viro'
-<<<<<<< HEAD
-=======
-=======
 import { StyleSheet, View, TouchableHighlight, Image, AlertIOS, ScrollView, ActivityIndicator } from 'react-native';
 
 // import HelloWorldSceneAR from '../components/ArProduct'
 import { ViroARSceneNavigator, ViroConstants } from 'react-viro';
-<<<<<<< HEAD
-import { Text, DeckSwiper, Footer, FooterTab, Button } from 'native-base'
->>>>>>> add button in Arr Screen
-=======
 import { Text, Footer, FooterTab, Button } from 'native-base'
->>>>>>> add 3d object
->>>>>>> add 3d object
 
 let ArProduct = require('../components/ArProduct')
 let ArInit = require('../components/ArInit')
@@ -27,10 +13,11 @@ let sharedProps = {
 }
 
 var objArray = [
-	require('../js/res/coffee_mug/object_coffee_mug.vrx'),
-	require('../js/res/object_flowers/object_flowers.vrx'),
 	require('../js/assets/apron_low.obj'),
-	require('../js/res/emoji_smile/emoji_smile.vrx')];
+	require('../js/assets/knitted_sweater_01.obj'),
+	require('../js/assets/m_trousers_02.obj'),
+	require('../js/assets/pith_helmet.obj')
+];
 
 import renderIf from '../js/helpers/renderIf';
 
@@ -38,31 +25,69 @@ export default class ArCam extends Component {
 	constructor() {
 		super()
 		this.state = {
-			cartItem: [{
-				pos: 0,
-				name: "coffee",
-				yOffset: 0,
-				source: objArray[0],
-				display: false
-			}, {
-				pos: 1,
-				name: "flower",
-				yOffset: .290760,
-				source: objArray[1],
-				display: false
-			}, {
-				pos: 2,
-				name: "apron",
-				yOffset: .497823,
-				source: objArray[2],
-				display: false
-			}, {
-				pos: 3,
-				name: "emoji",
-				yOffset: .694821,
-				source: objArray[3],
-				display: false
-			}],
+			cartItem: [
+				{
+					_id: "5b39e2662ddd3681e678d666",
+					name: "Chef Apron",
+					image: "https://storage.googleapis.com/storagetestupload/1530517814601apron.jpg",
+					obj_name: "apron",
+					obj_url: "https://storage.googleapis.com/storagetestupload/1530517884801apron_low.obj",
+					texture_url: "https://storage.googleapis.com/storagetestupload/1530517987448apron_color.png",
+					display: false
+				},
+				{
+					_id: "5b39e6d3c8f59d00105c92db",
+					name: "Knitted Sweater",
+					image: "https://storage.googleapis.com/storagetestupload/1530518221887sweater.png",
+					obj_name: "sweater",
+					obj_url: "https://storage.googleapis.com/storagetestupload/1530518274275knitted_sweater_01.obj",
+					texture_url: "https://storage.googleapis.com/storagetestupload/1530521601333Knitted_Sweater_01.png",
+					display: false
+				},
+				{
+					_id: "5b39e73dc8f59d00105c92dc",
+					name: "M trousers Jeans",
+					image: "https://storage.googleapis.com/storagetestupload/1530518784241jeans.png",
+					obj_name: "jeans",
+					obj_url: "https://storage.googleapis.com/storagetestupload/1530518846987m_trousers_02.obj",
+					texture_url: "https://storage.googleapis.com/storagetestupload/1530518887895M_Trousers_02_SPEC.png",
+					display: false
+				},
+				{
+					_id: "5b39e790c8f59d00105c92dd",
+					name: "Pith Helmet",
+					image: "https://storage.googleapis.com/storagetestupload/1530519614228hat.png",
+					obj_name: "hat",
+					obj_url: "https://storage.googleapis.com/storagetestupload/1530519500150pith_helmet.obj",
+					texture_url: "https://storage.googleapis.com/storagetestupload/1530519478247pith_helmet_spec.jpg",
+					display: false
+				}
+			],
+			// cartItem: [{
+			// 	pos: 0,
+			// 	name: "obj1",
+			// 	yOffset: 0,
+			// 	source: objArray[0],
+			// 	display: false
+			// }, {
+			// 	pos: 1,
+			// 	name: "obj2",
+			// 	yOffset: .290760,
+			// 	source: objArray[1],
+			// 	display: false
+			// }, {
+			// 	pos: 2,
+			// 	name: "obj3",
+			// 	yOffset: .497823,
+			// 	source: objArray[2],
+			// 	display: false
+			// }, {
+			// 	pos: 3,
+			// 	name: "obj4",
+			// 	yOffset: .694821,
+			// 	source: objArray[3],
+			// 	display: false
+			// }],
 			sharedProps: sharedProps,
 			isObject: false,
 			viroAppProps: {
@@ -106,23 +131,15 @@ export default class ArCam extends Component {
 		}
 	}
 
-	_onShowObject = (objIndex, objUniqueName, yOffset) => {
+	_onShowObject = (objIndex) => {
 		let cartItem = this.state.cartItem
 		cartItem[objIndex].display = !cartItem[objIndex].display
 		this.setState({
-			cartItem,
-			viroAppProps: {
-				...this.state.viroAppProps,
-				displayObject: true,
-				yOffset: yOffset,
-				displayObjectName: objUniqueName,
-				objectSource: objArray[objIndex]
-			},
+			cartItem
 		});
 	}
 
 	render() {
-		const self = this
 		return (
 			<View style={localStyles.outer} >
 				<ViroARSceneNavigator
@@ -137,26 +154,33 @@ export default class ArCam extends Component {
 					</View>)
 				}
 
-				<View>
+				<View >
 					{this.state.isObject ? (
-						<Footer>
-							<Button transparent onPress={this._onDisplayDialog}>
-								<Text>X</Text>
+						<Footer style={{ backgroundColor: "#000000" }}>
+							<Button transparent onPress={this._onDisplayDialog}
+							style={{
+								borderRadius:4,
+								opacity:0.7
+							}}
+							>
+								<Text>x</Text>
 							</Button>
-							<FooterTab style={{ backgroundColor: "#000000" }}>
+							<FooterTab>
 								<ScrollView horizontal={true}>
-									{this.state.cartItem.map((item) => (
+									{this.state.cartItem.map((item, index) => (
 										<Button transparent
 											onPress={() => {
-												this._onShowObject(item.pos, item.name, item.yOffset)
+												this._onShowObject(index)
 											}}
 											key={item.name}
+											style={{margin: 10, borderRadius: 10, padding: 5}}
 										>
 											<Image
-												source={require('../js/res/btn_mode_objects.png')}
+												source={{uri:item.image}}
 												style={{
 													width: 50,
-													height: 50
+													height: 50,
+													borderRadius: 10
 												}}
 											/>
 										</Button>
@@ -172,7 +196,7 @@ export default class ArCam extends Component {
 										source={require('../js/res/btn_mode_objects.png')}
 										style={{
 											width: 100,
-											height: 100
+											height: 100,
 										}}
 									/>
 								</TouchableHighlight>

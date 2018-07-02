@@ -10,10 +10,19 @@ export default class Object3D extends Component {
   constructor() {
     super()
     this.state = {
-      scale: [.1, .1, .1],
+      scale: [.6, .6, .6],
       rotation: [0, 0, 0],
       clickFlag: 0,
       shouldBillboard: true,
+      display: false
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.item) {
+      this.setState({
+        display: this.props.item.display
+      })
     }
   }
 
@@ -57,6 +66,12 @@ export default class Object3D extends Component {
     })
   }
 
+  deleteObject = () => {
+    this.setState({
+      display: false
+    })
+  }
+
   _onClick = () => {
     this.setState({
       clickFlag: this.state.clickFlag + 1
@@ -66,8 +81,7 @@ export default class Object3D extends Component {
         `${this.props.item.name}`,
         'What are you gonna do?',
         [
-          { text: 'Add to Cart', onPress: () => this.addToCart() },
-          { text: 'Delete', onPress: () => this.deleteThis() },
+          { text: 'Delete', onPress: () => this.deleteObject() },
           { text: 'Cancel', onPress: () => { }, style: 'cancel' }
         ],
         {
@@ -81,54 +95,50 @@ export default class Object3D extends Component {
   }
 
   render() {
+    // ViroMaterials.createMaterials({
+    //   obj1: {
+    //     lightingModel: "Constant",
+    //     diffuseTexture: require('../js/assets/apron/apron_color.png')
+    //   },
+    //   obj2: {
+    //     lightingModel: "Constant",
+    //     diffuseTexture: require('../js/assets/Texture/Knitted_Sweater_01.png')
+    //   },
+    //   obj3: {
+    //     lightingModel: "Constant",
+    //     diffuseTexture: require('../js/assets/Texture/M_Trousers_02_SPEC.png')
+    //   },
+    //   obj4: {
+    //     lightingModel: "Constant",
+    //     diffuseTexture: require('../js/assets/Texture/pith_helmet_spec.jpg')
+    //   },
+    // });
     ViroMaterials.createMaterials({
-      apron: {
+      [this.props.item.obj_name]: {
         lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/apron/apron_color.png')
-      },
-      flower: {
-        lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/apron/apron_color.png')
-      },
-      emoji: {
-        lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/apron/apron_color.png')
-      },
-      coffee: {
-        lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/Texture/Texture.jpg')
-      },
-      camo: {
-        lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/shirt/CAMO-texture.jpg')
-      },
-      felt: {
-        lightingModel: "Constant",
-        diffuseTexture: require('../js/assets/shirt/FELT-texture.jpg')
-      },
+        diffuseTexture: { uri: this.props.item.texture_url }
+      }
     });
     return (
       <ViroNode
-        visible={this.props.item.display}
+        visible={this.state.display}
         key={this.props.item.name}
+        position={[0, 0, 0]} 
+        // dragType={'FixedToWorld'}
       >
         <Viro3DObject
           ref={this._setARNodeRef}
-          position={[0, 0, -10]}
+          position={[0, -1, -10]}
           onClick={this._onClick}
-          // source={this.props.item.source}
-          source={require('../js/assets/Womens-Hoodie_Apose-2.obj')}
-          onLoadEnd={this._onLoadEnd}
-          onLoadStart={this._onLoadStart}
-          // onDrag={this._onDrag}
+          source={{ uri: this.props.item.obj_url }}
           onPinch={this._onPinch}
           onRotate={this._onRotate}
-          rotation={this.state.rotation}
+          // rotation={this.state.rotation}
           onDrag={this._onDrag}
-          dragType={"FixedToWorld"}
           type={"OBJ"}
           onClick={this._onClick}
-          materials={["camo"]}
+          scale={this.state.scale}
+          materials={[this.props.item.obj_name]}
         />
       </ViroNode>
     )
