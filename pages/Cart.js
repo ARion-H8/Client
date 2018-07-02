@@ -110,4 +110,4 @@ class Cart extends Component {
   }
 }
 
-export default graphql(product.users)(Cart)
+export default graphql(product.cart)(Cart)
