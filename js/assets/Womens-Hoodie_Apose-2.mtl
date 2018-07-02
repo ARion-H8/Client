@@ -1,0 +1,69 @@
+# MTL Exporter v1.0 by Seungwoo Oh at CLO - Virtual Fashion Inc.
+newmtl Default_Fabric_FRONT_31938
+Ka 0.694256 0.694256 0.694256
+Kd 0.748897 0.748897 0.748897
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+newmtl Material32012
+Ka 0.265744 0.298962 0.494948
+Kd 0.286659 0.322491 0.533902
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1067/81_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1067/81_DESATURATION.png
+newmtl Material32022
+Ka 0.847059 0.847059 0.847059
+Kd 0.913725 0.913725 0.913725
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1068/kitebag-zipper_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1068/kitebag-zipper_DESATURATION.png
+newmtl Material32048
+Ka 0.265744 0.298962 0.494948
+Kd 0.286659 0.322491 0.533902
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1069/81_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1069/81_DESATURATION.png
+newmtl Material32036
+Ka 0.265744 0.298962 0.494948
+Kd 0.286659 0.322491 0.533902
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1070/81_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1070/81_DESATURATION.png
+newmtl Material32029
+Ka 0.265744 0.298962 0.494948
+Kd 0.286659 0.322491 0.533902
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1071/81_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1071/81_DESATURATION.png
+newmtl Material32067
+Ka 0.365398 0.358754 0.358754
+Kd 0.394156 0.386990 0.386990
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+newmtl Material32058
+Ka 0.212595 0.235848 0.382007
+Kd 0.229327 0.254410 0.412072
+Ks 0.000000 0.000000 0.000000
+Ns 5.000000
+illum 2
+d 1.000000
+map_Ka C:/Users/Camille/AppData/Local/Temp/md5/1072/81_DESATURATION.png
+map_Kd C:/Users/Camille/AppData/Local/Temp/md5/1072/81_DESATURATION.png

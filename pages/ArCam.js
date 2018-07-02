@@ -5,6 +5,20 @@ import {
 	TouchableHighlight
 } from 'react-native';
 import { ViroARSceneNavigator } from 'react-viro'
+<<<<<<< HEAD
+=======
+=======
+import { StyleSheet, View, TouchableHighlight, Image, AlertIOS, ScrollView, ActivityIndicator } from 'react-native';
+
+// import HelloWorldSceneAR from '../components/ArProduct'
+import { ViroARSceneNavigator, ViroConstants } from 'react-viro';
+<<<<<<< HEAD
+import { Text, DeckSwiper, Footer, FooterTab, Button } from 'native-base'
+>>>>>>> add button in Arr Screen
+=======
+import { Text, Footer, FooterTab, Button } from 'native-base'
+>>>>>>> add 3d object
+>>>>>>> add 3d object
 
 let ArProduct = require('../components/ArProduct')
 let ArInit = require('../components/ArInit')
@@ -15,7 +29,7 @@ let sharedProps = {
 var objArray = [
 	require('../js/res/coffee_mug/object_coffee_mug.vrx'),
 	require('../js/res/object_flowers/object_flowers.vrx'),
-	require('../js/assets/hat.vrx'),
+	require('../js/assets/apron_low.obj'),
 	require('../js/res/emoji_smile/emoji_smile.vrx')];
 
 import renderIf from '../js/helpers/renderIf';
@@ -38,7 +52,7 @@ export default class ArCam extends Component {
 				display: false
 			}, {
 				pos: 2,
-				name: "hat",
+				name: "apron",
 				yOffset: .497823,
 				source: objArray[2],
 				display: false
@@ -82,26 +96,6 @@ export default class ArCam extends Component {
 		})
 	}
 
-	handleChange = (idx) => {
-		let cartItem = this.state.cartItem
-		cartItem[idx].display = !cartItem[idx].display
-		this.setState({
-			cartItem
-		})
-	}
-
-	// _renderTrackingText = () => {
-	// 	if (this.state.trackingInitialized) {
-	// 		return (<View style={{ position: 'absolute', backgroundColor: "#ffffff22", left: 30, right: 30, top: 30, alignItems: 'center' }}>
-	// 			<Text style={{ fontSize: 12, color: "#ffffff" }}>Tracking initialized.</Text>
-	// 		</View>);
-	// 	} else {
-	// 		return (<View style={{ position: 'absolute', backgroundColor: "#ffffff22", left: 30, right: 30, top: 30, alignItems: 'center' }}>
-	// 			<Text style={{ fontSize: 12, color: "#ffffff" }}>Waiting for tracking to initialize.</Text>
-	// 		</View>);
-	// 	}
-	// }
-
 	_onInitialized = (state, reason) => {
 		if (state == ViroConstants.TRACKING_NORMAL) {
 			this.setState({
@@ -113,7 +107,10 @@ export default class ArCam extends Component {
 	}
 
 	_onShowObject = (objIndex, objUniqueName, yOffset) => {
+		let cartItem = this.state.cartItem
+		cartItem[objIndex].display = !cartItem[objIndex].display
 		this.setState({
+			cartItem,
 			viroAppProps: {
 				...this.state.viroAppProps,
 				displayObject: true,
@@ -133,7 +130,6 @@ export default class ArCam extends Component {
 					initialScene={{ scene: ArInit, passProps: { displayObject: this.state.viroAppProps.displayObject, cartItem: this.state.cartItem } }}
 					viroAppProps={this.state.viroAppProps}
 				/>
-				{/* {this._renderTrackingText()} */}
 
 				{renderIf(this.state.isLoading,
 					<View style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }}>
@@ -149,10 +145,9 @@ export default class ArCam extends Component {
 							</Button>
 							<FooterTab style={{ backgroundColor: "#000000" }}>
 								<ScrollView horizontal={true}>
-									{this.state.cartItem.map((item, index) => (
+									{this.state.cartItem.map((item) => (
 										<Button transparent
 											onPress={() => {
-												this.handleChange(index)
 												this._onShowObject(item.pos, item.name, item.yOffset)
 											}}
 											key={item.name}
