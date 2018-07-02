@@ -18,7 +18,6 @@ class ListProducts extends Component {
   }
   render() {
     const { product, navigation } = this.props
-    console.log(product)
     return (
       <View style={ styles.gridCard } >
         <View style={ styles.gridHead } >
@@ -37,7 +36,7 @@ class ListProducts extends Component {
             </Text>
           </View>
           <View style={ styles.btnStyle } >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={ () => this.props.addToCart(product) } >
               <Text style={{ color:'white', alignSelf:'center', }}>
                 Add To Cart
               </Text>
