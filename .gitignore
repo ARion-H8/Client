@@ -1,8 +1,7 @@
 # OSX
 #
 .DS_Store
-ios/
-android/
+
 
 # Xcode
 #
@@ -24,6 +23,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+# Android/
 # Android/IntelliJ
 #
 build/
@@ -35,6 +35,8 @@ local.properties
 # node.js
 #
 node_modules/
+ios/
+android/
 npm-debug.log
 yarn-error.log
 

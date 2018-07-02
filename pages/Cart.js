@@ -42,7 +42,8 @@ export default class Cart extends Component {
           jumlah: 0
         }
       ],
-      totalPrice: 0
+      totalPrice: 0,
+      cart: null
     }
   }
 
@@ -74,7 +75,10 @@ export default class Cart extends Component {
     console.log('----->', this.state.number)
   }
 
+  
+
   render() {
+    console.log(this.props)
     return (
       <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ebeced' }}>
         <Content style={{ padding: 10, marginTop: 25, marginBottom: 10, width: 400 }}>
@@ -85,11 +89,7 @@ export default class Cart extends Component {
           <Card>
             <CardItem cardBody>
               <Left>
-<<<<<<< HEAD
-                <Image source={require('./spiker.jpeg')} style={{height: 200, width: 200 }}/>
-=======
-                {/* <Image source={require('./spiker.jpeg')} style={{height: 200, width: 200}}/> */}
->>>>>>> integrate auth to home, and change layout catalogue
+                {/* <Image source={require('./spiker.jpeg')} style={{height: 200, width: 200 }}/> */}
               </Left>
               <Left>
                 <Body>

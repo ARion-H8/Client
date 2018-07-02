@@ -29,6 +29,29 @@ let product = {
 			}
 		}
 	`,
+	cart:gql`
+		query {
+			user{
+				cart{
+					_id
+					product{
+						_id
+						name
+						price
+						image
+					}
+					quantity
+				}
+			}
+		}
+	`,
+	addCart:gql`
+		mutation addCart ($newCart: newCartItem){
+			addCart(newCartItem:$newCart){
+				quantity
+			}
+		}
+	`
 }
 
 export default product
