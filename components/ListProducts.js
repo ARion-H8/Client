@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Image,StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Head } from 'native-base';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text } from 'native-base';
 
 class ListProducts extends Component {
   rupiah = (num) => {
+    console.log(num)
     let strNum = num.toString()
     let result = strNum.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
     return  `Rp. ${result}`
@@ -17,34 +18,41 @@ class ListProducts extends Component {
     navigation.navigate('Cart')
   }
   render() {
-    const { product, navigation } = this.props
-    return (
-      <View style={ styles.gridCard } >
-        <View style={ styles.gridHead } >
-          <Text style={{ color:'white', alignSelf:'center', }} >
-            { product.name }
-          </Text>
-        </View>
-        <View style={ styles.gridBody } >
-          <Text>
-          </Text>
-        </View>
-        <View style={ styles.gridFooter } >
-          <View style={styles.price} >
-            <Text style={{ color:'white', alignSelf:'center', }} >
-              { this.rupiah( product.price ) }
+    const { product } = this.props
+    if(product) {
+      return (
+        <View style={ styles.gridCard } >
+          <View style={ styles.gridHead } >
+            <Text style={{ color:'black', alignSelf:'center', fontWeight: 'bold' }} >
+              { product.name }
             </Text>
           </View>
-          <View style={ styles.btnStyle } >
-            <TouchableOpacity onPress={ () => this.props.addToCart(product) } >
-              <Text style={{ color:'white', alignSelf:'center', }}>
-                Add To Cart
+          <View style={ styles.gridBody } >
+            <Image source={{uri: product.image}} style={{width: "100%", height: 170}}/>
+          </View>
+          <View style={ styles.gridFooter } >
+            <View style={styles.price} >
+              <Text style={{ color:'black', alignSelf:'center', }} >
+                { this.rupiah( product.price ) }
               </Text>
-            </TouchableOpacity>
+            </View>
+            <View style={ styles.btnStyle } >
+              <TouchableOpacity onPress={ () => this.props.addToCart(product) } >
+                <Text style={{ color:'white', alignSelf:'center', }}>
+                  Add To Cart
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    }else {
+      return (
+        <View>
+          <Text>LOADING</Text>
+        </View>
+      )
+    }
   }
 }
   
@@ -59,8 +67,9 @@ class ListProducts extends Component {
     gridHead:{
       flex:1,
       minHeight:50,
-      backgroundColor:'#29a329',
-      justifyContent:'center'
+      backgroundColor:'#bedce3',
+      justifyContent:'center',
+      borderTopStartRadius: 5
     },
     gridBody:{
       flex:1,
@@ -71,13 +80,14 @@ class ListProducts extends Component {
     gridFooter:{
       flex:1,
       minHeight:79,
-      backgroundColor:'#00b386',
+      backgroundColor:'#bedce3',
       justifyContent:'center',
+      borderBottomStartRadius: 5
     },
     btnStyle:{
       minHeight:29,
       justifyContent:'center', 
-      backgroundColor:'#cc3300',
+      backgroundColor:'#da7015',
       margin:4,
       borderRadius:4,
     },

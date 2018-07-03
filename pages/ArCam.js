@@ -1,31 +1,207 @@
-
 import React, { Component } from 'react';
-import {
-  View,
-	Text,
-	TouchableHighlight
-} from 'react-native';
-import { ViroARSceneNavigator } from 'react-viro'
+import { StyleSheet, View, TouchableHighlight, Image, ScrollView, ActivityIndicator } from 'react-native';
 
-let ArProduct = require('../components/ArProduct')
+import { ViroARSceneNavigator, ViroConstants } from 'react-viro';
+import { Text, Footer, FooterTab, Button } from 'native-base';
+
+let ArInit = require('../components/ArInit')
 let sharedProps = {
-	apiKey:'637783C0-7B08-4336-A463-922B852892BC'
+	apiKey: '637783C0-7B08-4336-A463-922B852892BC'
 }
+
+import renderIf from '../js/helpers/renderIf';
 
 export default class ArCam extends Component {
-	constructor(){
+	constructor() {
 		super()
-			this.state ={
-				sharedProps: sharedProps
-			}
+		this.state = {
+			cartItem: [],
+			// cartItem: [
+			// 	{
+			// 		_id: "5b39e2662ddd3681e678d666",
+			// 		name: "Chef Apron",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530517814601apron.jpg",
+			// 		obj_name: "apron",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530517884801apron_low.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530517987448apron_color.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e6d3c8f59d00105c92db",
+			// 		name: "Knitted Sweater",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530518221887sweater.png",
+			// 		obj_name: "sweater",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518274275knitted_sweater_01.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530521601333Knitted_Sweater_01.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e73dc8f59d00105c92dc",
+			// 		name: "M trousers Jeans",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530518784241jeans.png",
+			// 		obj_name: "jeans",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518846987m_trousers_02.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530518887895M_Trousers_02_SPEC.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e790c8f59d00105c92dd",
+			// 		name: "Pith Helmet",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530519614228hat.png",
+			// 		obj_name: "hat",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530519500150pith_helmet.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530519478247pith_helmet_spec.jpg",
+			// 		display: false
+			// 	}
+			// ],
+			sharedProps: sharedProps,
+			isObject: false,
+			trackingInitialized: false,
+			isLoading: false,
+		}
 	}
 
-  render() {
+	componentDidMount() {
+		const { navigation } = this.props;
+		let cartItem = [...navigation.state.params.itemCart]
+		cartItem.forEach(item => {
+			item.product.display = false
+		})
+		this.setState({
+			cartItem
+		})
+	}
+
+	_onLoadStart = () => {
+		this.setState({
+			isLoading: true,
+		});
+	}
+
+	_onLoadEnd = () => {
+		this.setState({
+			isLoading: false,
+		});
+	}
+
+	_onDisplayDialog = () => {
+		this.setState({
+			isObject: !this.state.isObject
+		})
+	}
+
+	_onInitialized = (state, _) => {
+		if (state == ViroConstants.TRACKING_NORMAL) {
+			this.setState({
+				trackingInitialized: true,
+			});
+		} else if (state == ViroConstants.TRACKING_NONE) {
+			// Handle loss of tracking
+		}
+	}
+
+	_onShowObject = (objIndex) => {
+		let cartItem = this.state.cartItem
+		cartItem[objIndex].product.display = true
+		this.setState({
+			cartItem
+		});
+	}
+
+	render() {
+		const{ navigation } = this.props
 		return (
-				<ViroARSceneNavigator {...this.state.sharedProps} 
-					initialScene={{ scene: ArProduct }}
+			<View style={localStyles.outer} >
+				<ViroARSceneNavigator
+					style={localStyles.arView} {...this.state.sharedProps}
+					initialScene={{ scene: ArInit, passProps: { cartItem: navigation.state.params.itemCart}, _onInitialized:this._onInitialized }}
 				/>
+
+				{renderIf(this.state.isLoading,
+					<View style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }}>
+						<ActivityIndicator size='large' animating={this.state.isLoading} color='#ffffff' />
+					</View>)
+				}
+
+				<View >
+					{this.state.isObject ? (
+						<Footer style={{ backgroundColor: "#000000" }}>
+							<Button transparent onPress={this._onDisplayDialog}
+							style={{
+								borderRadius:4,
+								opacity:0.7
+							}}
+							>
+								<Text>x</Text>
+							</Button>
+							<FooterTab>
+								<ScrollView horizontal={true}>
+									{this.state.cartItem.map((item, index) => (
+										<Button transparent
+											onPress={() => {
+												this._onShowObject(index)
+											}}
+											key={item.product.name}
+											style={{margin: 10, borderRadius: 10, padding: 5}}
+										>
+											<Image
+												source={{uri:item.product.image}}
+												style={{
+													width: 50,
+													height: 50,
+													borderRadius: 10
+												}}
+											/>
+										</Button>
+									))}
+								</ScrollView>
+							</FooterTab>
+						</Footer>) : (
+							<View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
+								<TouchableHighlight style={localStyles.buttons}
+									onPress={this._onDisplayDialog}
+									underlayColor={'#00000000'} >
+									<Image
+										source={require('../js/res/btn_mode_objects.png')}
+										style={{
+											width: 100,
+											height: 100,
+										}}
+									/>
+								</TouchableHighlight>
+							</View>
+						)}
+				</View>
+			</View>
+
 		)
-  }
+	}
 }
+
+
+var localStyles = StyleSheet.create({
+	outer: {
+		flex: 1,
+	},
+
+	arView: {
+		flex: 1,
+	},
+
+	buttons: {
+		height: 80,
+		width: 80,
+		paddingTop: 20,
+		paddingBottom: 20,
+		marginTop: 10,
+		marginBottom: 10,
+		backgroundColor: '#00000000',
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: '#ffffff00',
+		alignSelf: 'center'
+	}
+});
+
+
 

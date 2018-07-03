@@ -2,36 +2,36 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Image, 
+  Image,
   TextInput,
   FlatList
 } from 'react-native';
-import { 
-  Container, 
-  Header, 
-  Content, 
-  Card, 
-  CardItem, 
-  Text, 
-  Body, 
-  Button, 
-  Left, 
-  Right, 
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Body,
+  Button,
+  Left,
+  Right,
   Input,
   Footer,
-  FooterTab 
+  FooterTab
 } from 'native-base';
 import product from '../Graphql'
 import { graphql, compose } from 'react-apollo'
 
 class ListCart extends Component {
-  constructor () {
-    super ()
+  constructor() {
+    super()
     this.state = {
       quantity: 1,
-      image:'https://images.pexels.com/photos/889087/pexels-photo-889087.jpeg?auto=compress&cs=tinysrgb&h=350',
-      name:'',
-      price:0,
+      image: 'https://images.pexels.com/photos/889087/pexels-photo-889087.jpeg?auto=compress&cs=tinysrgb&h=350',
+      name: '',
+      price: 0,
       total: 0,
     }
   }
@@ -39,40 +39,40 @@ class ListCart extends Component {
   rupiah = (num) => {
     let strNum = num.toString()
     let result = strNum.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
-    return  `Rp. ${result}`
+    return `Rp. ${result}`
   }
 
   handlePlus = async () => {
     let { quantity } = this.state
     let id = this.props.item._id
     let price = this.state.price
-   
+
     quantity += 1
-     this.setState({
+    this.setState({
       quantity
     })
     let { plus } = this.props
     plus(price)
     try {
       let result = await this.props.edit({
-        variables:{
-          cartId:id, 
-          quantity:quantity
+        variables: {
+          cartId: id,
+          quantity: quantity
         },
-        refetchQueries:[{ query: product.cart }]
+        refetchQueries: [{ query: product.cart }]
       })
-      
+
     } catch (err) {
       console.log(err)
     }
   }
-  
+
   handleMinus = async () => {
     if (this.state.quantity > 1) {
       let { quantity } = this.state
       let id = this.props.item._id
       let price = this.state.price
-      
+
       quantity -= 1
       this.setState({
         quantity
@@ -81,13 +81,13 @@ class ListCart extends Component {
       minus(price)
       try {
         let result = await this.props.edit({
-          variables:{
-            cartId:id, 
-            quantity:quantity
+          variables: {
+            cartId: id,
+            quantity: quantity
           },
-          refetchQueries:[{ query: product.cart }]
+          refetchQueries: [{ query: product.cart }]
         })
-        
+
         console.log(result)
       } catch (err) {
         console.log(err)
@@ -117,28 +117,28 @@ class ListCart extends Component {
   render() {
     const { name, image, price, quantity } = this.state
     return (
-      <Card>
-        <CardItem cardBody>
+      <Card >
+        <CardItem cardBody style={{ backgroundColor: '#bedce3' }}>
           <Left>
-            <Image source={{ uri:image}} style={{height: 200, width: 200, margin:10 }}/>
+            <Image source={{ uri: image }} style={{ height: 200, width: 200, margin: 10 }} />
           </Left>
-            <Left style={{ marginLeft:40 }} >
-              <Body>
-                <Text 
+          <Left style={{ marginLeft: 40 }} >
+            <Body>
+              <Text
                 style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b' }}
-                >{name}</Text>
-                <Text 
+              >{name}</Text>
+              <Text
                 style={{ alignSelf: 'flex-start', color: '#3e3e3b' }}
-                >{this.rupiah(price)}</Text>
-              </Body>
-            </Left>
+              >{this.rupiah(price)}</Text>
+            </Body>
+          </Left>
         </CardItem>
-        <CardItem>
+        <CardItem style={{ backgroundColor: '#bedce3' }}>
           <Left style={{ alignItems: 'flex-start' }}>
             <Button
-            rounded
-            success
-            onPress={() => this.handleMinus()}
+              rounded
+              success
+              onPress={() => this.handleMinus()}
             >
               <Text style={{ fontWeight: 'bold' }}> - </Text>
             </Button>
@@ -146,17 +146,26 @@ class ListCart extends Component {
               <Text style={{ color: 'black' }}> {quantity} </Text>
             </Button>
             <Button
-            rounded
-            success
-            onPress={() => this.handlePlus()}
+              rounded
+              success
+              onPress={() => this.handlePlus()}
             >
               <Text style={{ fontWeight: 'bold' }}> + </Text>
             </Button>
           </Left>
           <Right>
-            <Button 
-            style={{ borderRadius: 5 }} 
-            danger>
+            <Button
+              onPress={async (e) => {
+                e.preventDefault()
+                await this.props.deleteCartProduct({
+                  variables: {
+                    cartId: this.props.item._id
+                  },
+                  refetchQueries: [{ query: product.cart }]
+                })
+              }}
+              style={{ borderRadius: 5 }}
+              danger>
               <Text>Delete</Text>
             </Button>
           </Right>
@@ -167,6 +176,7 @@ class ListCart extends Component {
 }
 
 export default compose(
-  graphql(product.editCart, {name: 'edit'}),
-  graphql(product.deleteCart, {name: 'delete'})
+  graphql(product.editCart, { name: 'edit' }),
+  graphql(product.deleteCart, { name: 'delete' }),
+  graphql(product.deleteCartProduct, { name: 'deleteCartProduct' })
 )(ListCart)
