@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
-import { ViroARSceneNavigator } from 'react-viro'
-import { StyleSheet, View, TouchableHighlight, Image, AlertIOS, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Image, ScrollView, ActivityIndicator } from 'react-native';
 
-// import HelloWorldSceneAR from '../components/ArProduct'
 import { ViroARSceneNavigator, ViroConstants } from 'react-viro';
-import { Text, Footer, FooterTab, Button } from 'native-base'
+import { Text, Footer, FooterTab, Button } from 'native-base';
 
-let ArProduct = require('../components/ArProduct')
 let ArInit = require('../components/ArInit')
 let sharedProps = {
 	apiKey: '637783C0-7B08-4336-A463-922B852892BC'
 }
-
-var objArray = [
-	require('../js/assets/apron_low.obj'),
-	require('../js/assets/knitted_sweater_01.obj'),
-	require('../js/assets/m_trousers_02.obj'),
-	require('../js/assets/pith_helmet.obj')
-];
 
 import renderIf from '../js/helpers/renderIf';
 
@@ -25,82 +15,61 @@ export default class ArCam extends Component {
 	constructor() {
 		super()
 		this.state = {
-			cartItem: [
-				{
-					_id: "5b39e2662ddd3681e678d666",
-					name: "Chef Apron",
-					image: "https://storage.googleapis.com/storagetestupload/1530517814601apron.jpg",
-					obj_name: "apron",
-					obj_url: "https://storage.googleapis.com/storagetestupload/1530517884801apron_low.obj",
-					texture_url: "https://storage.googleapis.com/storagetestupload/1530517987448apron_color.png",
-					display: false
-				},
-				{
-					_id: "5b39e6d3c8f59d00105c92db",
-					name: "Knitted Sweater",
-					image: "https://storage.googleapis.com/storagetestupload/1530518221887sweater.png",
-					obj_name: "sweater",
-					obj_url: "https://storage.googleapis.com/storagetestupload/1530518274275knitted_sweater_01.obj",
-					texture_url: "https://storage.googleapis.com/storagetestupload/1530521601333Knitted_Sweater_01.png",
-					display: false
-				},
-				{
-					_id: "5b39e73dc8f59d00105c92dc",
-					name: "M trousers Jeans",
-					image: "https://storage.googleapis.com/storagetestupload/1530518784241jeans.png",
-					obj_name: "jeans",
-					obj_url: "https://storage.googleapis.com/storagetestupload/1530518846987m_trousers_02.obj",
-					texture_url: "https://storage.googleapis.com/storagetestupload/1530518887895M_Trousers_02_SPEC.png",
-					display: false
-				},
-				{
-					_id: "5b39e790c8f59d00105c92dd",
-					name: "Pith Helmet",
-					image: "https://storage.googleapis.com/storagetestupload/1530519614228hat.png",
-					obj_name: "hat",
-					obj_url: "https://storage.googleapis.com/storagetestupload/1530519500150pith_helmet.obj",
-					texture_url: "https://storage.googleapis.com/storagetestupload/1530519478247pith_helmet_spec.jpg",
-					display: false
-				}
-			],
-			// cartItem: [{
-			// 	pos: 0,
-			// 	name: "obj1",
-			// 	yOffset: 0,
-			// 	source: objArray[0],
-			// 	display: false
-			// }, {
-			// 	pos: 1,
-			// 	name: "obj2",
-			// 	yOffset: .290760,
-			// 	source: objArray[1],
-			// 	display: false
-			// }, {
-			// 	pos: 2,
-			// 	name: "obj3",
-			// 	yOffset: .497823,
-			// 	source: objArray[2],
-			// 	display: false
-			// }, {
-			// 	pos: 3,
-			// 	name: "obj4",
-			// 	yOffset: .694821,
-			// 	source: objArray[3],
-			// 	display: false
-			// }],
+			cartItem: [],
+			// cartItem: [
+			// 	{
+			// 		_id: "5b39e2662ddd3681e678d666",
+			// 		name: "Chef Apron",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530517814601apron.jpg",
+			// 		obj_name: "apron",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530517884801apron_low.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530517987448apron_color.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e6d3c8f59d00105c92db",
+			// 		name: "Knitted Sweater",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530518221887sweater.png",
+			// 		obj_name: "sweater",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518274275knitted_sweater_01.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530521601333Knitted_Sweater_01.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e73dc8f59d00105c92dc",
+			// 		name: "M trousers Jeans",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530518784241jeans.png",
+			// 		obj_name: "jeans",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518846987m_trousers_02.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530518887895M_Trousers_02_SPEC.png",
+			// 		display: false
+			// 	},
+			// 	{
+			// 		_id: "5b39e790c8f59d00105c92dd",
+			// 		name: "Pith Helmet",
+			// 		image: "https://storage.googleapis.com/storagetestupload/1530519614228hat.png",
+			// 		obj_name: "hat",
+			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530519500150pith_helmet.obj",
+			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530519478247pith_helmet_spec.jpg",
+			// 		display: false
+			// 	}
+			// ],
 			sharedProps: sharedProps,
 			isObject: false,
-			viroAppProps: {
-				displayObject: false,
-				objectSource: objArray[0],
-				yOffset: 0,
-				_onLoadEnd: this._onLoadEnd,
-				_onLoadStart: this._onLoadStart,
-				_onInitialized: this._onInitialized
-			},
 			trackingInitialized: false,
 			isLoading: false,
 		}
+	}
+
+	componentDidMount() {
+		const { navigation } = this.props;
+		let cartItem = [...navigation.state.params.itemCart]
+		cartItem.forEach(item => {
+			item.product.display = false
+		})
+		this.setState({
+			cartItem
+		})
 	}
 
 	_onLoadStart = () => {
@@ -121,7 +90,7 @@ export default class ArCam extends Component {
 		})
 	}
 
-	_onInitialized = (state, reason) => {
+	_onInitialized = (state, _) => {
 		if (state == ViroConstants.TRACKING_NORMAL) {
 			this.setState({
 				trackingInitialized: true,
@@ -133,19 +102,19 @@ export default class ArCam extends Component {
 
 	_onShowObject = (objIndex) => {
 		let cartItem = this.state.cartItem
-		cartItem[objIndex].display = !cartItem[objIndex].display
+		cartItem[objIndex].product.display = true
 		this.setState({
 			cartItem
 		});
 	}
 
 	render() {
+		const{ navigation } = this.props
 		return (
 			<View style={localStyles.outer} >
 				<ViroARSceneNavigator
 					style={localStyles.arView} {...this.state.sharedProps}
-					initialScene={{ scene: ArInit, passProps: { displayObject: this.state.viroAppProps.displayObject, cartItem: this.state.cartItem } }}
-					viroAppProps={this.state.viroAppProps}
+					initialScene={{ scene: ArInit, passProps: { cartItem: navigation.state.params.itemCart}, _onInitialized:this._onInitialized }}
 				/>
 
 				{renderIf(this.state.isLoading,
@@ -172,11 +141,11 @@ export default class ArCam extends Component {
 											onPress={() => {
 												this._onShowObject(index)
 											}}
-											key={item.name}
+											key={item.product.name}
 											style={{margin: 10, borderRadius: 10, padding: 5}}
 										>
 											<Image
-												source={{uri:item.image}}
+												source={{uri:item.product.image}}
 												style={{
 													width: 50,
 													height: 50,

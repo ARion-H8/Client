@@ -1,24 +1,19 @@
 import React from "react";
 import {Image, ImageBackground, ToastAndroid } from "react-native";
-import { Container, Content, Text, List, ListItem } from "native-base";
+import { Container, Content, Text, List, ListItem, Header } from "native-base";
 const routes = ["Catalogue", "Cart", "signOut"];
 export default class SideBar extends React.Component {
 
   logout = () => {
-    // ToastAndroid.showWithGravity(
-    //   ' Success to Logout \n \n  Redirect to Login',
-    //   ToastAndroid.SHORT,
-    //   ToastAndroid.CENTER
-    // )
     this.props.screenProps.changeLoginState(false)
   }
 
   render() {
     return (
-      <Container style={{ backgroundColor: '#339966' }}>
+      <Container style={{ backgroundColor: '#f3f3f6' }}>
         <Content>
-          <ImageBackground
-            source={require('../Arion.jpg')}
+          {/* <ImageBackground
+            source={require('../js/assets/Arion.png')}
             style={{
               height: 180,
               alignSelf: "stretch",
@@ -26,16 +21,21 @@ export default class SideBar extends React.Component {
               alignItems: "center",
               margin :2,
               borderRadius:2,
-              opacity:0.8
-            }}>
-            <Image
+              opacity:0.8,
+              padding: 10
+            }}> */}
+            <Header style={{ backgroundColor: '#6cb4b8' }}>
+              <Text style={{ alignSelf: 'center', fontWeight: 'bold', fontSize: 40 }}>ARION</Text>
+            </Header>
+            
+            {/* <Image
               square
               style={{ height: 80, width: 70 }}
               source={{
                 uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/logo.png"
               }}
-            />
-          </ImageBackground>
+            /> */}
+          {/* </ImageBackground> */}
           <List
             dataArray={routes}
             renderRow={data => {
@@ -51,9 +51,9 @@ export default class SideBar extends React.Component {
                   }>
                   {
                     data==="signOut"?
-                    <Text style={{ color:'white' }} >Logout</Text>
+                    <Text style={{ color:'black' }} >Logout</Text>
                     :
-                    <Text style={{ color:'white' }} >{data}</Text>
+                    <Text style={{ color:'black' }} >{data}</Text>
                   }
                 </ListItem>
               );

@@ -58,7 +58,7 @@ class Login extends Component {
 	}
   render() {
     return (
-      <Container style={{ backgroundColor: '#f1ded3' }}>
+      <Container style={{ backgroundColor: '#6cb4b8' }}>
         <View style={ styles.container } >
           <Form style={{ alignItems: 'center'}}>
             <H1 style={ styles.login }>Login</H1>
@@ -99,13 +99,13 @@ class Login extends Component {
           success
           onPress={ this.signIn }
           style={ styles.btnStyle }>
-            <Text> Sign In </Text>
+            <Text style={{color:'#e2e1d9'}}> Sign In </Text>
           </Button>
         </View>
         <TouchableOpacity onPress={ this.signUp } style={ styles.footer }  >
 					<Text>
-						<Text style = {{ fontSize: 11, color:'#595959' }} > Don't have an account? </Text>
-						<Text style={{ fontSize: 11, color:'#595959', fontWeight: 'bold' }}>Sign up</Text>
+						<Text style = {{ fontSize: 11, color:'#e2e1d9' }} > Don't have an account? </Text>
+						<Text style={{ fontSize: 11, color:'#e2e1d9', fontWeight: 'bold' }}>Sign up</Text>
 					</Text>
 				</TouchableOpacity>
       </Container>
@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f3f3f6'
     },
   input: {
     marginBottom: 10,
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
   btnStyle: { 
     marginTop: 10, 
     alignSelf: 'center' ,
-    borderRadius: 6
+    borderRadius: 6,
+    backgroundColor: '#da7015'
   },
   login:{ 
     alignSelf: 'center', 
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
   footer: {
 		height: 55,
 		width: '100%',
-		borderColor: '#b8b894',
+		borderColor: '#6cb4b8',
 		borderWidth: 1,
 		alignItems: 'center',
 		justifyContent: 'center'

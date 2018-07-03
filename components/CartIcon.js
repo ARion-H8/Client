@@ -41,7 +41,7 @@ class CartIcon extends Component {
               <Text>
               </Text>
               }
-              <Icon type="FontAwesome" name="shopping-cart" style={{ color:'#29a329', marginRight:20 }} />
+              <Icon type="FontAwesome" name="shopping-cart" style={{ color:'white', marginRight:20 }} />
             </View>
           </TouchableOpacity>
         </View>

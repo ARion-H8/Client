@@ -39,6 +39,9 @@ let product = {
 						name
 						price
 						image
+						obj_url
+						obj_name
+						texture_url
 					}
 					quantity
 				}
@@ -55,19 +58,6 @@ let product = {
 	editCart: gql`
 		mutation editCart($cartId: String, $quantity: Int){
 			editCart(cartId: $cartId, quantity: $quantity){
-				_id
-				product {
-					_id
-					name
-					price
-					image
-				}
-				user {
-					_id
-					username
-					email
-					password
-				}
 				quantity
 			}
 		}
@@ -76,19 +66,13 @@ let product = {
 		mutation deleteCart($cartId: String){
 			deleteCart(cartId: $cartId){
 				_id
-				product {
-					_id
-					name
-					price
-					image
-				}
-				user {
-					_id
-					username
-					email
-					password
-				}
-				quantity
+			}
+		}
+	`,
+	deleteCartProduct: gql`
+		mutation deleteCartProduct($cartId: String){
+			deleteCartProduct(cartId: $cartId){
+				_id
 			}
 		}
 	`

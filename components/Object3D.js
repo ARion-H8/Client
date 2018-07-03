@@ -19,11 +19,9 @@ export default class Object3D extends Component {
   }
 
   componentDidMount() {
-    if (this.props.item) {
-      this.setState({
-        display: this.props.item.display
-      })
-    }
+    this.setState({
+      display: this.props.item.display 
+    })
   }
 
   _setARNodeRef = (component) => {
@@ -95,24 +93,6 @@ export default class Object3D extends Component {
   }
 
   render() {
-    // ViroMaterials.createMaterials({
-    //   obj1: {
-    //     lightingModel: "Constant",
-    //     diffuseTexture: require('../js/assets/apron/apron_color.png')
-    //   },
-    //   obj2: {
-    //     lightingModel: "Constant",
-    //     diffuseTexture: require('../js/assets/Texture/Knitted_Sweater_01.png')
-    //   },
-    //   obj3: {
-    //     lightingModel: "Constant",
-    //     diffuseTexture: require('../js/assets/Texture/M_Trousers_02_SPEC.png')
-    //   },
-    //   obj4: {
-    //     lightingModel: "Constant",
-    //     diffuseTexture: require('../js/assets/Texture/pith_helmet_spec.jpg')
-    //   },
-    // });
     ViroMaterials.createMaterials({
       [this.props.item.obj_name]: {
         lightingModel: "Constant",
@@ -128,7 +108,7 @@ export default class Object3D extends Component {
       >
         <Viro3DObject
           ref={this._setARNodeRef}
-          position={[0, -1, -10]}
+          position={[0, -5, -10]}
           onClick={this._onClick}
           source={{ uri: this.props.item.obj_url }}
           onPinch={this._onPinch}

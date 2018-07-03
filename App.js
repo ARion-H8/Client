@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import {
   YellowBox,
   View,
-  Button,
-  ActivityIndicator,
-  StatusBar,
   AsyncStorage,
   StyleSheet,
   Image
@@ -17,7 +14,6 @@ YellowBox.ignoreWarnings(['Task'])
 console.ignoredYellowBox = ['Remote debugger']
 
 import { createStackNavigator, createDrawerNavigator, StackNavigator } from 'react-navigation'
-import Home from './pages/Home'
 import ArCam from './pages/ArCam'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -77,7 +73,14 @@ const HomeScreenRouter = createDrawerNavigator(
           Cart:{
             screen:Cart,
             navigationOptions:{
-              title:'Cart'
+              title: null,
+              header: null
+            }
+          },
+          ArCam:{
+            screen:ArCam,
+            navigationOptions:{
+              header:null
             }
           }
         }
@@ -155,7 +158,7 @@ export default class App extends React.Component {
     if(loading){
 			return (
 				<View style={ styles.container } >
-          <Image source={ require('./Arion.jpg') }/>
+          <Image source={ require('./js/assets/Arion.png') }/>
 				</View>
 			)
 		}else{
