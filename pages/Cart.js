@@ -48,6 +48,15 @@ class Cart extends Component {
     })
   }
 
+  toCheckout = () => {
+    const { cart } = this.props.data.user
+    if(cart.length>0){
+      this.props.navigation.navigate('Checkout',{
+        totalPrice:this.state.totalPrice,
+        cart:cart
+      })
+    }
+  }
 
   componentDidMount() {
     const { user } = this.props.data
@@ -62,7 +71,6 @@ class Cart extends Component {
   }
 
   toArCam = () => {
-    console.log(this.props.data.user.cart)
     this.props.navigation.navigate('ArCam', {
       itemCart: this.props.data.user.cart.map(item => ({
         ...item, product: {
@@ -80,7 +88,7 @@ class Cart extends Component {
     if (loading) {
       return (
         <View style={styles.container} >
-          <Image source={require('../Arion.jpg')} />
+          <Image source={require('../Arion.png')} />
         </View>
       )
     } else {
@@ -109,7 +117,14 @@ class Cart extends Component {
               style={{ marginRight: 105, alignSelf: 'flex-start', borderRadius: 5, backgroundColor: '#da7015' }}>
               <Text style={{ fontWeight: 'bold' }}>FITTING ROOM</Text>
             </Button>
-            <Button block style={{ marginRight: 20, borderRadius: 5, backgroundColor: '#da7015' }}>
+            <Button block 
+            style={{ 
+              marginRight: 20, 
+              borderRadius: 5, 
+              backgroundColor: '#da7015' 
+            }}
+            onPress = { this.toCheckout }
+            >
               <Text style={{ fontWeight: 'bold', borderRadius: 5 }}>CHECKOUT</Text>
             </Button>
           </View>

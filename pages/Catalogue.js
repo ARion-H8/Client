@@ -58,6 +58,10 @@ class Catalogue extends Component {
   toCart = () => {
     this.props.navigation.navigate('Cart')
   }
+  // componentDidMount(){
+  //   const fromCheckout = this.props.navigation.getParam('fromCheckout')
+  //   console.log(fromCheckout)
+  // }
 
   render() {
     const { products, loading, user } = this.props.products

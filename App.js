@@ -20,6 +20,7 @@ import Register from './pages/Register'
 import Cart from './pages/Cart'
 import Catalogue from './pages/Catalogue'
 import SideBar from './components/SideBar';
+import Checkout from './pages/Checkout'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
@@ -82,7 +83,15 @@ const HomeScreenRouter = createDrawerNavigator(
             navigationOptions:{
               header:null
             }
+          },
+          Checkout:{
+            screen:Checkout,
+            navigationOptions:{
+              header:null
+            }
           }
+        },{
+          initialRouteName:'Cart'
         }
       )
     },
@@ -158,7 +167,7 @@ export default class App extends React.Component {
     if(loading){
 			return (
 				<View style={ styles.container } >
-          <Image source={ require('./js/assets/Arion.png') }/>
+          <Image source={require('./Arion.png')} />
 				</View>
 			)
 		}else{
