@@ -63,7 +63,7 @@ let product = {
 		}
 	`,
 	deleteCart: gql`
-		mutation deleteCart($cartId: String){
+		mutation deleteCart{
 			deleteCart(cartId: $cartId){
 				_id
 			}

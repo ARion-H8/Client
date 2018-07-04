@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Label, Button, Text, H1 } from 'native-base';
-import { StyleSheet, View, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, AsyncStorage, Alert, Image } from 'react-native'
 import product from '../Graphql'
 import { graphql } from 'react-apollo'
 
@@ -61,7 +61,8 @@ class Login extends Component {
       <Container style={{ backgroundColor: '#6cb4b8' }}>
         <View style={ styles.container } >
           <Form style={{ alignItems: 'center'}}>
-            <H1 style={ styles.login }>Login</H1>
+            <Image source={require('../Arion.png')} />  
+            {/* <H1 style={ styles.login }>Login</H1> */}
             <View style={ styles.input } >
               <Item style={ styles.input } fixedLabel>
                 <Label>Email</Label>

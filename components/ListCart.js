@@ -142,7 +142,7 @@ class ListCart extends Component {
             >
               <Text style={{ fontWeight: 'bold' }}> - </Text>
             </Button>
-            <Button bordered rounded light >
+            <Button bordered rounded style={{ borderColor:'#bedce3' }} >
               <Text style={{ color: 'black' }}> {quantity} </Text>
             </Button>
             <Button

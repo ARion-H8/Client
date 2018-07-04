@@ -4,7 +4,6 @@ import { Text } from 'native-base';
 
 class ListProducts extends Component {
   rupiah = (num) => {
-    console.log(num)
     let strNum = num.toString()
     let result = strNum.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
     return  `Rp. ${result}`
