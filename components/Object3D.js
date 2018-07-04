@@ -13,15 +13,8 @@ export default class Object3D extends Component {
       scale: [.6, .6, .6],
       rotation: [0, 0, 0],
       clickFlag: 0,
-      shouldBillboard: true,
-      display: false
+      materials: 'obj1'
     }
-  }
-
-  componentDidMount() {
-    this.setState({
-      display: this.props.item.display 
-    })
   }
 
   _setARNodeRef = (component) => {
@@ -43,7 +36,6 @@ export default class Object3D extends Component {
       });
       return;
     }
-
     this.arNodeRef.setNativeProps({ scale: newScale })
   }
 
@@ -65,9 +57,43 @@ export default class Object3D extends Component {
   }
 
   deleteObject = () => {
+    this.props.hideObject(this.props.index)
+  }
+
+  changeColor = () => {
+    // this.props.showHeader(this.props.index)
+    Alert.alert(
+      `${this.props.item.name}`,
+      'What are you gonna do?',
+      [
+        { text: 'Color 1', onPress: () => {
+          return this.setState({
+            materials: 'obj1'
+          })
+        } },
+        { text: 'Color 2', onPress: () => {
+          return this.setState({
+            materials: 'obj2'
+          })
+        } },
+        { text: 'Cancel', onPress: () => { }, style: 'cancel' }
+      ],
+      {
+        cancelable: true
+      }
+    )
     this.setState({
-      display: false
+      clickFlag: 0
     })
+    // if (this.state.materials === 'obj1') {
+    //   this.setState({
+    //     materials: 'obj2'
+    //   })
+    // } else {
+    //   this.setState({
+    //     materials: 'obj1'
+    //   })
+    // }
   }
 
   _onClick = () => {
@@ -79,6 +105,7 @@ export default class Object3D extends Component {
         `${this.props.item.name}`,
         'What are you gonna do?',
         [
+          { text: 'Change Color', onPress: () => this.changeColor() },
           { text: 'Delete', onPress: () => this.deleteObject() },
           { text: 'Cancel', onPress: () => { }, style: 'cancel' }
         ],
@@ -94,17 +121,21 @@ export default class Object3D extends Component {
 
   render() {
     ViroMaterials.createMaterials({
-      [this.props.item.obj_name]: {
+      obj1: {
         lightingModel: "Constant",
         diffuseTexture: { uri: this.props.item.texture_url }
+      },
+      obj2: {
+        lightingModel: "Constant",
+        diffuseTexture: { uri: this.props.item.texture_2 }
       }
     });
     return (
       <ViroNode
-        visible={this.state.display}
+        visible={this.props.item.display}
         key={this.props.item.name}
         position={[0, 0, 0]} 
-        // dragType={'FixedToWorld'}
+        dragType={'FixedToWorld'}
       >
         <Viro3DObject
           ref={this._setARNodeRef}
@@ -118,7 +149,7 @@ export default class Object3D extends Component {
           type={"OBJ"}
           onClick={this._onClick}
           scale={this.state.scale}
-          materials={[this.props.item.obj_name]}
+          materials={[this.state.materials]}
         />
       </ViroNode>
     )
