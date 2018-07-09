@@ -33,6 +33,8 @@ class ListCart extends Component {
       name: '',
       price: 0,
       total: 0,
+      texture_img1: '',
+      texture_img2: ''
     }
   }
 
@@ -110,7 +112,9 @@ class ListCart extends Component {
       price: this.props.item.product.price
     })
     this.setState({
-      quantity: this.props.item.quantity
+      quantity: this.props.item.quantity,
+      texture_img1: this.props.item.product.texture_img1,
+      texture_img2: this.props.item.product.texture_img2
     })
   }
 
@@ -125,11 +129,16 @@ class ListCart extends Component {
           <Left style={{ marginLeft: 40 }} >
             <Body>
               <Text
-                style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b' }}
+                style={{ alignSelf: 'flex-start', fontWeight: 'bold', color: '#3e3e3b', fontSize: 20 }}
               >{name}</Text>
               <Text
                 style={{ alignSelf: 'flex-start', color: '#3e3e3b' }}
               >{this.rupiah(price)}</Text>
+              <Text style={{ marginTop: 55, fontWeight:"bold" }}>Color Available: </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Image source={{ uri: this.state.texture_img1 }} style={{ height: 50, width: 50, margin: 5 }} />
+                <Image source={{ uri: this.state.texture_img2 }} style={{ height: 50, width: 50, margin: 5 }} />
+              </View>
             </Body>
           </Left>
         </CardItem>
@@ -142,7 +151,7 @@ class ListCart extends Component {
             >
               <Text style={{ fontWeight: 'bold' }}> - </Text>
             </Button>
-            <Button bordered rounded style={{ borderColor:'#bedce3' }} >
+            <Button bordered rounded style={{ borderColor: '#bedce3' }} >
               <Text style={{ color: 'black' }}> {quantity} </Text>
             </Button>
             <Button

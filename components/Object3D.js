@@ -134,7 +134,7 @@ export default class Object3D extends Component {
       <ViroNode
         visible={this.props.item.display}
         key={this.props.item.name}
-        position={[0, 0, 0]} 
+        // position={[0, 0, 0]} 
         dragType={'FixedToWorld'}
       >
         <Viro3DObject
