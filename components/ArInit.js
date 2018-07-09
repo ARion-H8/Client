@@ -25,6 +25,9 @@ export default class ArInit extends Component {
           key={item.product.name}
           arSceneNavigator={{ ...this.props.arSceneNavigator }}
           arscene={arscene}
+          hideObject={this.props.hideObject}
+          // showHeader={this.props.showHeader}
+          // material={this.props.material}
         />)
       }
     })
@@ -32,9 +35,10 @@ export default class ArInit extends Component {
   }
 
   render() {
+    console.log(this.props.material)
     return (
       <ViroARScene ref="arscene" onTrackingUpdated={this.props._onInitialized}>
-        {/* <ViroAmbientLight color="#ffffff" intensity={200} /> */}
+        <ViroAmbientLight color="#ffffff" intensity={200} />
         <ViroOmniLight />        
         {this.showObject(this.refs["arscene"])}
       </ViroARScene>

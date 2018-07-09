@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableHighlight, Image, ScrollView, ActivityIndicator } from 'react-native';
 
 import { ViroARSceneNavigator, ViroConstants } from 'react-viro';
-import { Text, Footer, FooterTab, Button } from 'native-base';
+import { Text, Footer, FooterTab, Button, Header, Container, Content } from 'native-base';
 
 let ArInit = require('../components/ArInit')
 let sharedProps = {
@@ -16,48 +16,13 @@ export default class ArCam extends Component {
 		super()
 		this.state = {
 			cartItem: [],
-			// cartItem: [
-			// 	{
-			// 		_id: "5b39e2662ddd3681e678d666",
-			// 		name: "Chef Apron",
-			// 		image: "https://storage.googleapis.com/storagetestupload/1530517814601apron.jpg",
-			// 		obj_name: "apron",
-			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530517884801apron_low.obj",
-			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530517987448apron_color.png",
-			// 		display: false
-			// 	},
-			// 	{
-			// 		_id: "5b39e6d3c8f59d00105c92db",
-			// 		name: "Knitted Sweater",
-			// 		image: "https://storage.googleapis.com/storagetestupload/1530518221887sweater.png",
-			// 		obj_name: "sweater",
-			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518274275knitted_sweater_01.obj",
-			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530521601333Knitted_Sweater_01.png",
-			// 		display: false
-			// 	},
-			// 	{
-			// 		_id: "5b39e73dc8f59d00105c92dc",
-			// 		name: "M trousers Jeans",
-			// 		image: "https://storage.googleapis.com/storagetestupload/1530518784241jeans.png",
-			// 		obj_name: "jeans",
-			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530518846987m_trousers_02.obj",
-			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530518887895M_Trousers_02_SPEC.png",
-			// 		display: false
-			// 	},
-			// 	{
-			// 		_id: "5b39e790c8f59d00105c92dd",
-			// 		name: "Pith Helmet",
-			// 		image: "https://storage.googleapis.com/storagetestupload/1530519614228hat.png",
-			// 		obj_name: "hat",
-			// 		obj_url: "https://storage.googleapis.com/storagetestupload/1530519500150pith_helmet.obj",
-			// 		texture_url: "https://storage.googleapis.com/storagetestupload/1530519478247pith_helmet_spec.jpg",
-			// 		display: false
-			// 	}
-			// ],
 			sharedProps: sharedProps,
 			isObject: false,
 			trackingInitialized: false,
 			isLoading: false,
+			// header: false,
+			index: 0,
+			// material: 'obj1'
 		}
 	}
 
@@ -108,72 +73,152 @@ export default class ArCam extends Component {
 		});
 	}
 
+	hideObject = (objIndex) => {
+		let cartItem = this.state.cartItem
+		cartItem[objIndex].product.display = false
+		this.setState({
+			cartItem
+		});
+	}
+
+	showHeader = (idx) => {
+		this.setState({
+			header: true,
+			index: idx
+		})
+	}
+
+	hideHeader = () => {
+		// this.setState({
+		// 	header: false
+		// })
+	}
+
+	changeColor = (idx) => {
+		// if (idx === 0) {
+		// 	this.setState({
+		// 		material: 'obj1'
+		// 	})
+		// } else {
+		// 	this.setState({
+		// 		material: 'obj2'
+		// 	})
+		// }
+	}
+
+	handleHeader = () => {
+		const { cartItem, index, header } = this.state
+		if (header) {
+			return (
+				<Header>
+					<ScrollView horizontal={true}>
+						<Button transparent
+							onPress={() => this.changeColor(0)}
+							style={{ margin: 5, borderRadius: 5, padding: 5 }}
+						>
+							<Image
+								source={{ uri: cartItem[index].product.texture_img1 }}
+								style={{
+									width: 50,
+									height: 50,
+									borderRadius: 5,
+									margin: 5
+								}}
+							/>
+						</Button>
+						<Button transparent
+							onPress={() => this.changeColor(1)}
+							style={{ margin: 5, borderRadius: 5, padding: 5 }}
+						>
+							<Image
+								source={{ uri: cartItem[index].product.texture_img2 }}
+								style={{
+									width: 50,
+									height: 50,
+									borderRadius: 5
+								}}
+							/>
+						</Button>
+					</ScrollView>
+				</Header>
+			)
+		}
+	}
+
+	handleButton = () => {
+		if (this.state.isObject) {
+			return (
+				<Footer style={{ backgroundColor: "#000000" }}>
+					<Button transparent onPress={this._onDisplayDialog}
+						style={{
+							borderRadius: 4,
+							opacity: 0.7
+						}}
+					>
+						<Text>x</Text>
+					</Button>
+					<FooterTab>
+						<ScrollView horizontal={true}>
+							{this.state.cartItem.map((item, index) => (
+								<Button transparent
+									onPress={() => {
+										this._onShowObject(index)
+									}}
+									key={item.product.name}
+									style={{ margin: 5, borderRadius: 5, padding: 5 }}
+								>
+									<Image
+										source={{ uri: item.product.image }}
+										style={{
+											width: 50,
+											height: 50,
+											borderRadius: 10
+										}}
+									/>
+								</Button>
+							))}
+						</ScrollView>
+					</FooterTab>
+				</Footer>
+			)
+		} else {
+			return (
+				<View
+					style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
+					<TouchableHighlight style={localStyles.buttons}
+						onPress={this._onDisplayDialog}
+						underlayColor={'#00000000'} >
+						<Image
+							source={require('../js/res/btn_mode_objects.png')}
+							style={{
+								width: 100,
+								height: 100,
+							}}
+						/>
+					</TouchableHighlight>
+				</View >
+			)
+		}
+	}
+
 	render() {
-		const{ navigation } = this.props
+		const { navigation } = this.props
+		console.log(this.state.material)
+		let updateMaterial = this.state.material
 		return (
-			<View style={localStyles.outer} >
+			<Container>
+				{/* {this.handleHeader()} */}
 				<ViroARSceneNavigator
-					style={localStyles.arView} {...this.state.sharedProps}
-					initialScene={{ scene: ArInit, passProps: { cartItem: navigation.state.params.itemCart}, _onInitialized:this._onInitialized }}
+					{...this.state.sharedProps}
+					initialScene={{ scene: ArInit, passProps: { cartItem: navigation.state.params.itemCart, _onInitialized: this._onInitialized, hideObject: this.hideObject, /* showHeader: this.showHeader, material:updateMaterial */ } }}
 				/>
 
 				{renderIf(this.state.isLoading,
 					<View style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center' }}>
 						<ActivityIndicator size='large' animating={this.state.isLoading} color='#ffffff' />
-					</View>)
-				}
-
-				<View >
-					{this.state.isObject ? (
-						<Footer style={{ backgroundColor: "#000000" }}>
-							<Button transparent onPress={this._onDisplayDialog}
-							style={{
-								borderRadius:4,
-								opacity:0.7
-							}}
-							>
-								<Text>x</Text>
-							</Button>
-							<FooterTab>
-								<ScrollView horizontal={true}>
-									{this.state.cartItem.map((item, index) => (
-										<Button transparent
-											onPress={() => {
-												this._onShowObject(index)
-											}}
-											key={item.product.name}
-											style={{margin: 10, borderRadius: 10, padding: 5}}
-										>
-											<Image
-												source={{uri:item.product.image}}
-												style={{
-													width: 50,
-													height: 50,
-													borderRadius: 10
-												}}
-											/>
-										</Button>
-									))}
-								</ScrollView>
-							</FooterTab>
-						</Footer>) : (
-							<View style={{ position: 'absolute', left: 0, right: 0, bottom: 77, alignItems: 'center' }}>
-								<TouchableHighlight style={localStyles.buttons}
-									onPress={this._onDisplayDialog}
-									underlayColor={'#00000000'} >
-									<Image
-										source={require('../js/res/btn_mode_objects.png')}
-										style={{
-											width: 100,
-											height: 100,
-										}}
-									/>
-								</TouchableHighlight>
-							</View>
-						)}
-				</View>
-			</View>
-
+					</View>)}
+				{this.handleButton()}
+			</Container>
 		)
 	}
 }

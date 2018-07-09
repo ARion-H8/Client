@@ -88,7 +88,7 @@ class Cart extends Component {
     if (loading) {
       return (
         <View style={styles.container} >
-          <Image source={require('../Arion.png')} />
+          <Image source={require('../js/assets/Arion.png')} />
         </View>
       )
     } else {

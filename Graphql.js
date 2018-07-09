@@ -42,6 +42,9 @@ let product = {
 						obj_url
 						obj_name
 						texture_url
+						texture_2
+						texture_img1
+						texture_img2
 					}
 					quantity
 				}
