@@ -26,4 +26,5 @@ jobs:
           slack-webhook-url: ${{ secrets.PR_SLACK_WEBHOOK_URL }}
           pr-url: ${{ github.event.pull_request.html_url }}
           pr-reviewers: ${{ toJSON(github.event.pull_request.requested_reviewers) }}
+          mapped-slack-user-id: ${{ secrets.SLACK_USER_IDS }}
         

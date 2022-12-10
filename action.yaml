@@ -7,6 +7,8 @@ inputs:
     description: 'pr url'
   pr-reviewers:
     description: 'pr-reviewers'
+  mapped-slack-user-id:
+    description: 'mapped_slack_user_id'
 runs:
   using: 'node16'
   main: 'pr_reminder.js'
