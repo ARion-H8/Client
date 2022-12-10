@@ -1,5 +1,8 @@
 name: 'PR Reminders'
 description: 'Greet someone and record the time'
+inputs:
+  slack-webhook-url:
+    description: 'webhook url'
 runs:
   using: 'node16'
   main: 'pr_reminder.js'

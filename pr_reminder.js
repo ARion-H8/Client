@@ -5,11 +5,11 @@ const axios = require('axios');
   try {
     
     const payload = {
-      text: `<@userID> test 1 ${core.getInput('slack-webhook-url')}`
+      text: `<@userID> test 1`
     }
 
     await axios.post(
-      "https://hooks.slack.com/services/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", 
+      `${core.getInput('slack-webhook-url')}`, 
       payload);
   } catch (error) {
     core.setFailed(error.message);
