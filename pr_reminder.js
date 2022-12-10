@@ -14,7 +14,7 @@ const axios = require('axios');
     }, '')
     
     const payload = {
-      text: `${mentionText} test 1 ${reviewers.join(',')}`
+      text: `${mentionText} test 1 ${reviewers.join(',')} ${JSON.stringify(mappedSlackUserIds)}`
     }
 
     await axios.post(
