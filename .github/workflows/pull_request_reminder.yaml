@@ -10,7 +10,13 @@ jobs:
     name: Notify Incoming New Pull Request
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      - name: Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: install modules
+        run: npm ci
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: ./
