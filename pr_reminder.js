@@ -9,7 +9,7 @@ const axios = require('axios');
     }
 
     await axios.post(
-      "https://hooks.slack.com/services/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", 
+      "https://hooks.slack.com/services/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", 
       payload);
   } catch (error) {
     core.setFailed(error.message);
