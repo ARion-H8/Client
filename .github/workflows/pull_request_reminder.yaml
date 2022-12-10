@@ -16,7 +16,7 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": " ${{ toJSON(secrets.SLACK_USER_IDS)[github.event.pull_request.requested_reviewers.*.login] }}GitHub asd Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"            
+              "text": " ${{ toJSON(secrets.SLACK_USER_IDS)[github.event.pull_request.requested_reviewers[0].login] }}GitHub asd Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"            
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.PR_SLACK_WEBHOOK_URL }}
