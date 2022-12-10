@@ -10,7 +10,7 @@ jobs:
     name: Notify Incoming New Pull Request
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: ./
