@@ -23,5 +23,5 @@ jobs:
         id: slack
         uses: ./
         with:
-          SLACK_WEBHOOK_URL: ${{ secrets.PR_SLACK_WEBHOOK_URL }}
+          slack-webhook-url: ${{ secrets.PR_SLACK_WEBHOOK_URL }}
         
