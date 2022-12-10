@@ -5,6 +5,7 @@ const axios = require('axios');
   try {
   
     const mappedSlackUserIds = JSON.parse(core.getInput('mapped-slack-user-id'))
+    const prUrl = core.getInput('pr-url')
     
     const reviewers = JSON.parse(core.getInput('pr-reviewers')).map(d => d.login)
     const slackUserIds = reviewers.map(name => mappedSlackUserIds[name])
@@ -14,7 +15,7 @@ const axios = require('axios');
     }, '')
     
     const payload = {
-      text: `${mentionText} test 1 ${reviewers.join(',')} ${JSON.stringify(mappedSlackUserIds)}`
+      text: `Hi ${mentionText} \n Please review this PR: ${prUrl}`
     }
 
     await axios.post(
