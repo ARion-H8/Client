@@ -7,7 +7,7 @@ const axios = require('axios');
     const mappedSlackUserIds = JSON.parse(core.getInput('pr-reviewers'))
     
     const reviewers = JSON.parse(core.getInput('pr-reviewers')).map(d => d.login)
-    const slackUserIds = reviewers.map(name => mappedSlackUserIds[reviewers])
+    const slackUserIds = reviewers.map(name => mappedSlackUserIds[name])
     const mentionText = slackUserIds.reduce((curr, acc) => {
       curr += `<@${acc}> `
       return curr
