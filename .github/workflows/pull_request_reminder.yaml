@@ -24,4 +24,6 @@ jobs:
         uses: ./
         with:
           slack-webhook-url: ${{ secrets.PR_SLACK_WEBHOOK_URL }}
+          pr-url: ${{ github.event.pull_request.html_url }}
+          pr-reviewers: ${{ github.event.requested_reviewers.*.login }}
         

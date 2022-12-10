@@ -3,9 +3,10 @@ const axios = require('axios');
 
 (async () => {
   try {
+    console.log(core.getInput('pr-reviewers'))
     
     const payload = {
-      text: `<@userID> test 1`
+      text: `<@userID> test 1 ${JSON.stringify(core.getInput('pr-reviewers'))}`
     }
 
     await axios.post(
