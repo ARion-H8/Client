@@ -4,7 +4,7 @@ const axios = require('axios');
 (async () => {
   try {
   
-    const mappedSlackUserIds = JSON.parse(core.getInput('pr-reviewers'))
+    const mappedSlackUserIds = JSON.parse(core.getInput('mapped-slack-user-id'))
     
     const reviewers = JSON.parse(core.getInput('pr-reviewers')).map(d => d.login)
     const slackUserIds = reviewers.map(name => mappedSlackUserIds[name])
