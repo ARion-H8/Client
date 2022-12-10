@@ -11,14 +11,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: install modules
-        run: |
-          npm install @actions/core
-          npm install axios
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: ./
