@@ -16,7 +16,9 @@ jobs:
         with:
           node-version: 16
       - name: install modules
-        run: npm ci
+        run: |
+          npm install @actions/core
+          npm install axios
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: ./
